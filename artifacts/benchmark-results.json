@@ -1,0 +1,253 @@
+{
+  "experiment_type": "combined",
+  "benchmark_tool": "wrk",
+  "benchmark_tool_version": "4.2.0",
+  "warmup_runs": 1,
+  "measurement_runs": 5,
+  "load_profile": {
+    "concurrency_levels": [50, 200, 500],
+    "duration_seconds": 30,
+    "request_mix": "GET /users/:id (read-heavy, pre-seeded data), POST /users (write with DB insert)"
+  },
+  "metrics": [
+    {
+      "name": "startup_time_ms",
+      "unit": "ms",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "run_values": [89], "mean": 89, "median": 89, "notes": "Cold start on Apple Silicon, with DB migration on first connect" },
+        { "name": "go-fiber",  "run_values": [89], "mean": 89, "median": 89, "notes": "Similar to Rust — goroutines start fast" },
+        { "name": "dotnet-minimal", "run_values": [288], "mean": 288, "median": 288, "notes": "JIT warm-up overhead — 3.2x slower than Rust/Go" }
+      ]
+    },
+    {
+      "name": "memory_idle_mb",
+      "unit": "MB",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "run_values": [8.2], "mean": 8.2, "median": 8.2, "notes": "8.2 MB RSS at idle with pool" },
+        { "name": "go-fiber",  "run_values": [19.7], "mean": 19.7, "median": 19.7, "notes": "Go runtime adds baseline overhead" },
+        { "name": "dotnet-minimal", "run_values": [109.1], "mean": 109.1, "median": 109.1, "notes": "CLR costs 100+ MB at idle — 13x vs Rust" }
+      ]
+    },
+    {
+      "name": "memory_under_load_mb",
+      "unit": "MB",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "run_values": [17.4], "mean": 17.4, "median": 17.4, "notes": "c=200 sustained load" },
+        { "name": "go-fiber",  "run_values": [36.7], "mean": 36.7, "median": 36.7, "notes": "c=200 sustained load" },
+        { "name": "dotnet-minimal", "run_values": [356.6], "mean": 356.6, "median": 356.6, "notes": "c=200 — dotnet RSS jumps 3x under load; JIT + GC pressure" }
+      ]
+    },
+    {
+      "name": "throughput_rps_c50",
+      "unit": "requests/sec",
+      "lower_is_better": false,
+      "targets": [
+        {
+          "name": "rust-axum",
+          "run_values": [11245, 11321, 11455, 11453, 11346],
+          "mean": 11364,
+          "median": 11346,
+          "p50": 11346,
+          "p95": null,
+          "p99": null,
+          "min": 11245,
+          "max": 11455,
+          "stddev": 82,
+          "error_rate_pct": 0.0,
+          "notes": "Steady, tight distribution — very low jitter"
+        },
+        {
+          "name": "go-fiber",
+          "run_values": [29685, 29325, 27771, 28913, 29033],
+          "mean": 28945,
+          "median": 29033,
+          "p50": 29033,
+          "p95": null,
+          "p99": null,
+          "min": 27771,
+          "max": 29685,
+          "stddev": 711,
+          "error_rate_pct": 0.0,
+          "notes": "2.55x faster than Rust at c=50. Some run-to-run variance."
+        },
+        {
+          "name": "dotnet-minimal",
+          "run_values": [24554, 24605, 24779, 23880, 24550],
+          "mean": 24474,
+          "median": 24554,
+          "p50": 24554,
+          "p95": null,
+          "p99": null,
+          "min": 23880,
+          "max": 24779,
+          "stddev": 337,
+          "error_rate_pct": 0.0,
+          "notes": "Strong showing at low load — JIT has warmed up. 2.15x faster than Rust."
+        }
+      ]
+    },
+    {
+      "name": "throughput_rps_c200",
+      "unit": "requests/sec",
+      "lower_is_better": false,
+      "targets": [
+        {
+          "name": "rust-axum",
+          "run_values": [10123, 11119, 11288, 11203, 11386],
+          "mean": 11024,
+          "median": 11203,
+          "p50": 11203,
+          "min": 10123,
+          "max": 11386,
+          "stddev": 496,
+          "error_rate_pct": 0.0,
+          "notes": "First run warm-up effect; runs 2-5 stable around 11.2k RPS"
+        },
+        {
+          "name": "go-fiber",
+          "run_values": [28273, 29369, 29333, 29363, 29002],
+          "mean": 29068,
+          "median": 29333,
+          "p50": 29333,
+          "min": 28273,
+          "max": 29369,
+          "stddev": 407,
+          "error_rate_pct": 0.0,
+          "notes": "Virtually identical performance at c=200 vs c=50 — goroutines scale cleanly"
+        },
+        {
+          "name": "dotnet-minimal",
+          "run_values": [14427, 14304, 14818, 12363, 14363],
+          "mean": 14055,
+          "median": 14363,
+          "p50": 14363,
+          "min": 12363,
+          "max": 14818,
+          "stddev": 956,
+          "error_rate_pct": 0.5,
+          "notes": "Performance drops significantly at c=200 vs c=50. GC pauses visible in latency spikes."
+        }
+      ]
+    },
+    {
+      "name": "throughput_rps_c500",
+      "unit": "requests/sec",
+      "lower_is_better": false,
+      "targets": [
+        {
+          "name": "rust-axum",
+          "run_values": [11287, 11351, 11371, 11386, 11350],
+          "mean": 11349,
+          "median": 11351,
+          "p50": 11351,
+          "min": 11287,
+          "max": 11386,
+          "stddev": 36,
+          "error_rate_pct": 33.1,
+          "notes": "Non-2xx at c=500 are DB connection pool exhaustion (pool capped at 20). Throughput flat — pool is the bottleneck not the server."
+        },
+        {
+          "name": "go-fiber",
+          "run_values": [28928, 29005, 28973, 28982, 28693],
+          "mean": 28916,
+          "median": 28982,
+          "p50": 28982,
+          "min": 28693,
+          "max": 29005,
+          "stddev": 117,
+          "error_rate_pct": 28.6,
+          "notes": "Same pool exhaustion pattern. Despite errors, latency is remarkably stable."
+        },
+        {
+          "name": "dotnet-minimal",
+          "run_values": [14301, 13771, 14772, 13625, 14325],
+          "mean": 14159,
+          "median": 14301,
+          "p50": 14301,
+          "min": 13625,
+          "max": 14772,
+          "stddev": 459,
+          "error_rate_pct": 28.5,
+          "notes": "Latency spikes to 1s+ under c=500 stress. GC pauses compound with connection pressure."
+        }
+      ]
+    },
+    {
+      "name": "latency_avg_ms_c50",
+      "unit": "ms",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "mean": 4.21, "min": 3.5, "max": 15.66, "stddev": 0.49, "notes": "Extremely tight distribution" },
+        { "name": "go-fiber",  "mean": 1.66, "min": 0.9, "max": 29.58, "stddev": 0.34, "notes": "Lowest avg latency — but occasional spikes" },
+        { "name": "dotnet-minimal", "mean": 2.30, "min": 0.8, "max": 159.05, "stddev": 3.31, "notes": "High stdev — GC pauses create long tail latency" }
+      ]
+    },
+    {
+      "name": "latency_avg_ms_c200",
+      "unit": "ms",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "mean": 17.73, "min": 8.0, "max": 47.73, "stddev": 1.28, "notes": "Linear scale from c=50 — predictable" },
+        { "name": "go-fiber",  "mean": 6.87, "min": 5.0, "max": 26.07, "stddev": 0.67, "notes": "Outstanding — 2.58x better than Rust avg latency" },
+        { "name": "dotnet-minimal", "mean": 47.45, "min": 5.0, "max": 956.20, "stddev": 93.73, "notes": "GC tail latency at c=200 is severe — p99 estimated >500ms" }
+      ]
+    },
+    {
+      "name": "latency_avg_ms_c500",
+      "unit": "ms",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "mean": 43.62, "min": 35.0, "max": 58.48, "stddev": 1.87, "notes": "Tight distribution even at stress — predictable degradation" },
+        { "name": "go-fiber",  "mean": 17.12, "min": 14.0, "max": 34.95, "stddev": 1.09, "notes": "2.55x lower latency than Rust at c=500" },
+        { "name": "dotnet-minimal", "mean": 50.51, "min": 15.0, "max": 1010.0, "stddev": 67.96, "notes": "Latency exceeds 1s at tail. GC halts visible." }
+      ]
+    },
+    {
+      "name": "post_throughput_rps_c50",
+      "unit": "requests/sec",
+      "lower_is_better": false,
+      "targets": [
+        { "name": "rust-axum", "run_values": [8708, 8599, 8696, 8827, 8770], "mean": 8720, "stddev": 83, "notes": "Write throughput — steady" },
+        { "name": "go-fiber",  "run_values": [9086, 9202, 9052, 8999, 9126], "mean": 9093, "stddev": 78, "notes": "4.3% faster writes than Rust" },
+        { "name": "dotnet-minimal", "run_values": [8560, 8647, 8690, 8648, 8615], "mean": 8632, "stddev": 47, "notes": "1.0% slower than Rust — effectively the same" }
+      ]
+    },
+    {
+      "name": "cold_build_time_ms",
+      "unit": "ms",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "run_values": [45887], "mean": 45887, "notes": "45.9 seconds cold build. LTO + 267 crates = expensive." },
+        { "name": "go-fiber",  "run_values": [303], "mean": 303, "notes": "303ms — 151x faster than Rust cold build" },
+        { "name": "dotnet-minimal", "run_values": [835], "mean": 835, "notes": "835ms publish. 55x faster than Rust." }
+      ]
+    },
+    {
+      "name": "binary_size_bytes",
+      "unit": "bytes",
+      "lower_is_better": true,
+      "targets": [
+        { "name": "rust-axum", "run_values": [4329600], "mean": 4329600, "notes": "4.1 MB — smallest self-contained executable" },
+        { "name": "go-fiber",  "run_values": [21324130], "mean": 21324130, "notes": "20.3 MB — includes full Go runtime" },
+        { "name": "dotnet-minimal", "run_values": [1654039], "mean": 1654039, "notes": "1.58 MB publish dir — but requires ~200 MB .NET runtime installed separately" }
+      ]
+    }
+  ],
+  "raw_logs": [
+    "/tmp/bench-rust-get-50.txt",
+    "/tmp/bench-go-get-50.txt",
+    "/tmp/bench-dotnet-get-50.txt",
+    "/tmp/bench-rust-get-200.txt",
+    "/tmp/bench-go-get-200.txt",
+    "/tmp/bench-dotnet-get-200.txt",
+    "/tmp/bench-rust-get-500.txt",
+    "/tmp/bench-go-get-500.txt",
+    "/tmp/bench-dotnet-get-500.txt",
+    "/tmp/bench-rust-post-50.txt",
+    "/tmp/bench-go-post-50.txt",
+    "/tmp/bench-dotnet-post-50.txt"
+  ]
+}

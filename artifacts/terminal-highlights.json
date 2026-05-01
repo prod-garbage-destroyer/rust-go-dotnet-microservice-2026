@@ -1,0 +1,108 @@
+{
+  "highlights": [
+    {
+      "target": "rust-axum",
+      "label": "Cold build — 267 crates, 45 seconds",
+      "command": "cargo build --release",
+      "output": "Downloading crates ...\n   Compiling proc-macro2 v1.0.106\n   ...\n   Compiling microservice v0.1.0\n    Finished `release` profile [optimized] target(s) in 45.81s",
+      "category": "build",
+      "why_it_matters": "The most painful Rust tradeoff — first build takes 45 seconds. This is the real DX cost of Rust's compile-time guarantees."
+    },
+    {
+      "target": "rust-axum",
+      "label": "Startup time — 89ms",
+      "command": "DATABASE_URL=... PORT=3001 ./target/release/microservice",
+      "output": "rust-axum listening on 0.0.0.0:3001",
+      "category": "startup",
+      "why_it_matters": "Native binary — zero JIT, zero warmup. Ready to serve 11k RPS from the first request."
+    },
+    {
+      "target": "rust-axum",
+      "label": "Memory at idle — 8.2 MB RSS",
+      "command": "ps -o rss= -p $(pgrep microservice)",
+      "output": "8400   # KB\n=> 8.2 MB",
+      "category": "metric",
+      "why_it_matters": "Rust's zero-cost abstractions deliver: 8 MB to run a production-ready microservice with DB pool."
+    },
+    {
+      "target": "rust-axum",
+      "label": "Throughput at c=50 — 11,364 RPS",
+      "command": "wrk -c 50 -d 30s -t 8 -s get-users.lua http://localhost:3001",
+      "output": "  Thread Stats   Avg      Stdev     Max   +/- Stdev\n    Latency     4.19ms  451.13us  13.72ms   71.71%\n    Req/Sec     1.37k    48.95     1.74k    70.38%\n  Requests/sec:  11453.43\nTransfer/sec:      2.28MB",
+      "category": "benchmark",
+      "why_it_matters": "Sub-5ms average latency with <0.5ms stdev — Rust's predictability is its superpower."
+    },
+    {
+      "target": "rust-axum",
+      "label": "Memory under load — 17.4 MB (c=200)",
+      "command": "ps -o rss= -p $RUST_PID  # sampled mid-benchmark",
+      "output": "17824 KB => 17.4 MB",
+      "category": "metric",
+      "why_it_matters": "2x memory growth under 200 concurrent connections. Go doubles to 37 MB. dotnet explodes to 357 MB."
+    },
+    {
+      "target": "go-fiber",
+      "label": "Build time — 303ms",
+      "command": "go build -o microservice .",
+      "output": "(no output — success is silent)\nBuild time: 303ms",
+      "category": "build",
+      "why_it_matters": "151x faster than Rust cold build. Go's compilation speed is a genuine team productivity advantage."
+    },
+    {
+      "target": "go-fiber",
+      "label": "Throughput at c=50 — 28,945 RPS avg",
+      "command": "wrk -c 50 -d 30s -t 8 -s get-users.lua http://localhost:3002",
+      "output": "  Thread Stats   Avg      Stdev     Max   +/- Stdev\n    Latency     1.65ms  306.22us   7.03ms   72.18%\n    Req/Sec     3.66k    68.14     4.00k    71.09%\n  Requests/sec:  29032.85\nTransfer/sec:      5.12MB",
+      "category": "benchmark",
+      "why_it_matters": "1.65ms avg latency — Go Fiber with fasthttp is genuinely faster than Rust Axum here. No GC pauses visible at this load."
+    },
+    {
+      "target": "go-fiber",
+      "label": "Throughput at c=500 — 28,916 RPS",
+      "command": "wrk -c 500 -d 30s -t 8 -s get-users.lua http://localhost:3002",
+      "output": "  Thread Stats   Avg      Stdev     Max   +/- Stdev\n    Latency    17.26ms    1.22ms  34.95ms   75.21%\n    Req/Sec     3.64k   124.27     4.10k    68.84%\n  Requests/sec:  28692.79",
+      "category": "benchmark",
+      "why_it_matters": "Go Fiber barely budges from c=50 to c=500 — goroutines + fasthttp scale horizontally with almost zero overhead."
+    },
+    {
+      "target": "go-fiber",
+      "label": "Memory under load — 36.7 MB (c=200)",
+      "command": "ps -o rss= -p $GO_PID",
+      "output": "37600 KB => 36.7 MB",
+      "category": "metric",
+      "why_it_matters": "2x Rust memory under load. Reasonable trade-off for 2.55x better throughput."
+    },
+    {
+      "target": "dotnet-minimal",
+      "label": "Startup time — 288ms (3.2x slower than Rust/Go)",
+      "command": "dotnet publish/microservice.dll",
+      "output": "dotnet-minimal listening on port 3003\nStartup: 288ms",
+      "category": "startup",
+      "why_it_matters": "JIT compilation adds a fixed 200ms warmup tax. Fine for long-running services, painful for cold starts / serverless."
+    },
+    {
+      "target": "dotnet-minimal",
+      "label": "Latency spike at c=200 — avg 47ms, max 956ms",
+      "command": "wrk -c 200 -d 30s -t 8 -s get-users.lua http://localhost:3003",
+      "output": "  Thread Stats   Avg      Stdev     Max   +/- Stdev\n    Latency    47.37ms   96.92ms 934.01ms   90.37%\n    Req/Sec     1.85k   293.47     2.64k    66.91%\n  Requests/sec:  14427.40",
+      "category": "benchmark",
+      "why_it_matters": "The 96ms stdev reveals GC pause spikes. The 934ms max means some requests waited nearly a second — unacceptable for p99 SLAs."
+    },
+    {
+      "target": "dotnet-minimal",
+      "label": "Memory explosion — 357 MB under load",
+      "command": "ps -o rss= -p $DOTNET_PID  # sampled at c=200",
+      "output": "365200 KB => 356.6 MB",
+      "category": "metric",
+      "why_it_matters": "20x more memory than Rust under the same load. At 100 microservice instances, that's 35 GB vs 1.7 GB."
+    },
+    {
+      "target": "dotnet-minimal",
+      "label": "Strong write throughput — 8,632 RPS POST",
+      "command": "wrk -c 50 -d 20s -t 4 -s post-users.lua http://localhost:3003",
+      "output": "Requests/sec:  8614.83\nLatency:  6.06ms avg",
+      "category": "benchmark",
+      "why_it_matters": "Write-heavy workloads are where dotnet holds its own — within 1% of Rust for DB inserts."
+    }
+  ]
+}

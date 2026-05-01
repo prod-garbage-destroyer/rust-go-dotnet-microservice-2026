@@ -1,0 +1,25 @@
+{
+  "os": "macOS",
+  "os_version": "darwin arm64",
+  "cpu": "Apple Silicon (M-series)",
+  "ram_gb": 16,
+  "docker_version": null,
+  "podman_version": "5.8.2",
+  "toolchains": [
+    { "name": "rustc", "version": "1.93.1 (01f6ddf75 2026-02-11)" },
+    { "name": "cargo", "version": "1.93.1" },
+    { "name": "go", "version": "1.26.2 darwin/arm64" },
+    { "name": "dotnet", "version": "10.0.107" },
+    { "name": "axum", "version": "0.8.9" },
+    { "name": "sqlx", "version": "0.8.6" },
+    { "name": "gofiber", "version": "v2" },
+    { "name": "pgx", "version": "v5.9.2" },
+    { "name": "Npgsql", "version": "10.0.2" },
+    { "name": "postgres", "version": "16 (container via Podman)" }
+  ],
+  "benchmark_tool": "wrk",
+  "benchmark_tool_version": "4.2.0",
+  "timestamp": "2026-05-01T07:00:00Z",
+  "hostname": "local-apple-silicon",
+  "notes": "PostgreSQL running in Podman container on port 5433. All three services ran bare-metal on the host. Services run sequentially during benchmarks to avoid resource contention."
+}

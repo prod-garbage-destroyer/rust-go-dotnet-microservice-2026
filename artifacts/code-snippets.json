@@ -1,0 +1,94 @@
+{
+  "snippets": [
+    {
+      "target": "rust-axum",
+      "file_path": "implementations/rust-axum/src/main.rs",
+      "label": "Route definition with typed state",
+      "start_line": 183,
+      "end_line": 192,
+      "language": "rust",
+      "snippet": "let app = Router::new()\n    .route(\"/health\", get(health))\n    .route(\"/users\", post(create_user).get(list_users))\n    .route(\"/users/{id}\", get(get_user).delete(delete_user))\n    .with_state(state);",
+      "why_it_matters": "Axum's type-safe routing extracts path params and state at compile time — zero runtime panics from wrong types"
+    },
+    {
+      "target": "rust-axum",
+      "file_path": "implementations/rust-axum/src/main.rs",
+      "label": "Async background job (fire-and-forget)",
+      "start_line": 74,
+      "end_line": 79,
+      "language": "rust",
+      "snippet": "let email = user.email.clone();\ntask::spawn(async move {\n    let ts = Utc::now();\n    println!(\"NOTIFY: email sent to {} at {}\", email, ts);\n});",
+      "why_it_matters": "tokio::task::spawn gives Rust true async fire-and-forget without blocking the response — no threads wasted"
+    },
+    {
+      "target": "rust-axum",
+      "file_path": "implementations/rust-axum/src/main.rs",
+      "label": "Validation with derive macros",
+      "start_line": 22,
+      "end_line": 28,
+      "language": "rust",
+      "snippet": "#[derive(Debug, Deserialize, Validate)]\nstruct CreateUserRequest {\n    #[validate(length(min = 1, max = 100))]\n    name: String,\n    #[validate(email)]\n    email: String,\n}",
+      "why_it_matters": "Compile-time validation rules via derive macros — no runtime reflection, no hidden cost"
+    },
+    {
+      "target": "rust-axum",
+      "file_path": "implementations/rust-axum/src/main.rs",
+      "label": "sqlx typed query with connection pool",
+      "start_line": 55,
+      "end_line": 62,
+      "language": "rust",
+      "snippet": "let user = sqlx::query_as::<_, User>(\n    \"INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id, name, email, created_at\",\n)\n.bind(&payload.name)\n.bind(&payload.email)\n.fetch_one(&state.pool)\n.await",
+      "why_it_matters": "sqlx maps query results directly to structs at compile time — no ORM overhead, no reflection"
+    },
+    {
+      "target": "go-fiber",
+      "file_path": "implementations/go-fiber/main.go",
+      "label": "Route definition with Fiber",
+      "start_line": 63,
+      "end_line": 70,
+      "language": "go",
+      "snippet": "app.Get(\"/health\", func(c *fiber.Ctx) error {\n    return c.JSON(HealthResponse{Status: \"ok\"})\n})\napp.Post(\"/users\", ...)\napp.Get(\"/users/:id\", ...)\napp.Get(\"/users\", ...)\napp.Delete(\"/users/:id\", ...)",
+      "why_it_matters": "Fiber uses fasthttp under the hood — zero-allocation request handling that bypasses net/http overhead entirely"
+    },
+    {
+      "target": "go-fiber",
+      "file_path": "implementations/go-fiber/main.go",
+      "label": "Goroutine fire-and-forget background job",
+      "start_line": 97,
+      "end_line": 100,
+      "language": "go",
+      "snippet": "go func(email string) {\n    fmt.Printf(\"NOTIFY: email sent to %s at %s\\n\", email, time.Now().Format(time.RFC3339))\n}(user.Email)",
+      "why_it_matters": "Go goroutines are ~2KB stack — launching thousands for background work costs almost nothing"
+    },
+    {
+      "target": "go-fiber",
+      "file_path": "implementations/go-fiber/main.go",
+      "label": "pgxpool connection pool config",
+      "start_line": 36,
+      "end_line": 43,
+      "language": "go",
+      "snippet": "config, err := pgxpool.ParseConfig(dbURL)\nconfig.MinConns = 5\nconfig.MaxConns = 20\npool, err := pgxpool.NewWithConfig(context.Background(), config)",
+      "why_it_matters": "pgxpool is the fastest Go Postgres driver — binary protocol, prepared statements, and zero-copy reads"
+    },
+    {
+      "target": "dotnet-minimal",
+      "file_path": "implementations/dotnet-minimal/microservice/Program.cs",
+      "label": "Minimal API route definition",
+      "start_line": 42,
+      "end_line": 52,
+      "language": "csharp",
+      "snippet": "app.MapPost(\"/users\", async (CreateUserRequest req, NpgsqlDataSource ds) => {\n    // ...\n    return Results.Created($\"/users/{user.Id}\", user);\n});\napp.MapGet(\"/users/{id:guid}\", async (Guid id, NpgsqlDataSource ds) => {\n    // ...\n});\napp.MapGet(\"/users\", async (NpgsqlDataSource ds) => { ... });\napp.MapDelete(\"/users/{id:guid}\", async (Guid id, NpgsqlDataSource ds) => { ... });",
+      "why_it_matters": "ASP.NET Minimal API cuts 90% of boilerplate vs MVC. Route parameters are parsed and typed automatically."
+    },
+    {
+      "target": "dotnet-minimal",
+      "file_path": "implementations/dotnet-minimal/microservice/Program.cs",
+      "label": "async/await background job",
+      "start_line": 70,
+      "end_line": 72,
+      "language": "csharp",
+      "snippet": "_ = Task.Run(() =>\n    Console.WriteLine($\"NOTIFY: email sent to {user.Email} at {DateTime.UtcNow:O}\"));",
+      "why_it_matters": "Task.Run fire-and-forget — same pattern as other stacks but GC must track these tasks"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "charts": [
+    {
+      "type": "bar",
+      "title": "Read Throughput — GET /users/:id (RPS)",
+      "x_label": "Concurrency",
+      "y_label": "Requests / Second",
+      "lower_is_better": false,
+      "annotations": [
+        { "target": "go-fiber",       "value": 28945, "label": "28,945 RPS" },
+        { "target": "dotnet-minimal", "value": 24474, "label": "24,474 RPS" },
+        { "target": "rust-axum",      "value": 11364, "label": "11,364 RPS" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 11364, "color_hint": "amber" },
+        { "target": "go-fiber",       "value": 28945, "color_hint": "green" },
+        { "target": "dotnet-minimal", "value": 24474, "color_hint": "cyan" }
+      ]
+    },
+    {
+      "type": "grouped-bar",
+      "title": "Read Throughput Across Concurrency Levels (RPS)",
+      "x_label": null,
+      "y_label": "Requests / Second",
+      "lower_is_better": false,
+      "groups": ["c=50", "c=200", "c=500"],
+      "annotations": [],
+      "series": [
+        { "target": "rust-axum",      "values": [11364, 11024, 11349], "color_hint": "amber" },
+        { "target": "go-fiber",       "values": [28945, 29068, 28916], "color_hint": "green" },
+        { "target": "dotnet-minimal", "values": [24474, 14055, 14159], "color_hint": "cyan" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Average Latency — c=200 (ms, lower is better)",
+      "x_label": null,
+      "y_label": "Milliseconds",
+      "lower_is_better": true,
+      "annotations": [
+        { "target": "go-fiber",       "value": 6.87,  "label": "6.87ms" },
+        { "target": "rust-axum",      "value": 17.73, "label": "17.73ms" },
+        { "target": "dotnet-minimal", "value": 47.45, "label": "47.45ms avg / 956ms max" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 17.73, "color_hint": "amber" },
+        { "target": "go-fiber",       "value": 6.87,  "color_hint": "green" },
+        { "target": "dotnet-minimal", "value": 47.45, "color_hint": "red" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Latency Max (Worst Case) — c=200 (ms)",
+      "x_label": null,
+      "y_label": "Milliseconds",
+      "lower_is_better": true,
+      "annotations": [
+        { "target": "go-fiber",       "value": 26.07,  "label": "26ms" },
+        { "target": "rust-axum",      "value": 47.73,  "label": "48ms" },
+        { "target": "dotnet-minimal", "value": 956.20, "label": "956ms — GC spike" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 47.73,  "color_hint": "amber" },
+        { "target": "go-fiber",       "value": 26.07,  "color_hint": "green" },
+        { "target": "dotnet-minimal", "value": 956.20, "color_hint": "red" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Memory Under Load — c=200 (MB RSS)",
+      "x_label": null,
+      "y_label": "MB",
+      "lower_is_better": true,
+      "annotations": [
+        { "target": "rust-axum",      "value": 17.4,  "label": "17 MB" },
+        { "target": "go-fiber",       "value": 36.7,  "label": "37 MB" },
+        { "target": "dotnet-minimal", "value": 356.6, "label": "357 MB" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 17.4,  "color_hint": "green" },
+        { "target": "go-fiber",       "value": 36.7,  "color_hint": "amber" },
+        { "target": "dotnet-minimal", "value": 356.6, "color_hint": "red" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Cold Build Time (seconds)",
+      "x_label": null,
+      "y_label": "Seconds",
+      "lower_is_better": true,
+      "annotations": [
+        { "target": "go-fiber",       "value": 0.3,  "label": "0.3s" },
+        { "target": "dotnet-minimal", "value": 0.8,  "label": "0.8s" },
+        { "target": "rust-axum",      "value": 45.9, "label": "45.9s" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 45.9, "color_hint": "red" },
+        { "target": "go-fiber",       "value": 0.3,  "color_hint": "green" },
+        { "target": "dotnet-minimal", "value": 0.8,  "color_hint": "amber" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Binary / Deploy Size (MB)",
+      "x_label": null,
+      "y_label": "MB",
+      "lower_is_better": true,
+      "annotations": [
+        { "target": "rust-axum",      "value": 4.1,  "label": "4.1 MB (self-contained)" },
+        { "target": "dotnet-minimal", "value": 1.6,  "label": "1.6 MB (+200 MB runtime)" },
+        { "target": "go-fiber",       "value": 20.3, "label": "20.3 MB (self-contained)" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 4.1,  "color_hint": "green" },
+        { "target": "go-fiber",       "value": 20.3, "color_hint": "amber" },
+        { "target": "dotnet-minimal", "value": 1.6,  "color_hint": "cyan" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Startup Time (ms)",
+      "x_label": null,
+      "y_label": "Milliseconds",
+      "lower_is_better": true,
+      "annotations": [
+        { "target": "rust-axum",      "value": 89,  "label": "89ms" },
+        { "target": "go-fiber",       "value": 89,  "label": "89ms" },
+        { "target": "dotnet-minimal", "value": 288, "label": "288ms" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 89,  "color_hint": "green" },
+        { "target": "go-fiber",       "value": 89,  "color_hint": "green" },
+        { "target": "dotnet-minimal", "value": 288, "color_hint": "amber" }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Write Throughput — POST /users (RPS, c=50)",
+      "x_label": null,
+      "y_label": "Requests / Second",
+      "lower_is_better": false,
+      "annotations": [
+        { "target": "go-fiber",       "value": 9093, "label": "9,093 RPS" },
+        { "target": "rust-axum",      "value": 8720, "label": "8,720 RPS" },
+        { "target": "dotnet-minimal", "value": 8632, "label": "8,632 RPS" }
+      ],
+      "series": [
+        { "target": "rust-axum",      "value": 8720, "color_hint": "amber" },
+        { "target": "go-fiber",       "value": 9093, "color_hint": "green" },
+        { "target": "dotnet-minimal", "value": 8632, "color_hint": "cyan" }
+      ]
+    }
+  ]
+}

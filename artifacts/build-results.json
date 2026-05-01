@@ -1,0 +1,53 @@
+{
+  "targets": [
+    {
+      "name": "rust-axum",
+      "toolchain": "rustc 1.93.1",
+      "framework": "Axum 0.8.9",
+      "build_command": "cargo build --release",
+      "exit_code": 0,
+      "cold_build_duration_ms": 45887,
+      "incremental_build_duration_ms": 396,
+      "binary_size_bytes": 4329600,
+      "image_size_bytes": null,
+      "dependencies_count": 267,
+      "warnings_count": 1,
+      "errors": [],
+      "stdout_excerpt": "Finished `release` profile [optimized] target(s) in 45.81s",
+      "notes": "LTO enabled, codegen-units=1. Cold build downloads and compiles 267 crates. Warning: unused import `delete` — cosmetic only."
+    },
+    {
+      "name": "go-fiber",
+      "toolchain": "go 1.26.2",
+      "framework": "Fiber v2 + pgx v5.9.2",
+      "build_command": "go build -o microservice .",
+      "exit_code": 0,
+      "cold_build_duration_ms": 303,
+      "incremental_build_duration_ms": 303,
+      "binary_size_bytes": 21324130,
+      "image_size_bytes": null,
+      "dependencies_count": 18,
+      "warnings_count": 0,
+      "errors": [],
+      "stdout_excerpt": "(no output on success)",
+      "notes": "Go embeds runtime and all dependencies in the binary — explains larger binary vs Rust. Build is near-instant even cold due to Go's fast compilation."
+    },
+    {
+      "name": "dotnet-minimal",
+      "toolchain": "dotnet 10.0.107",
+      "framework": "ASP.NET Minimal API + Npgsql 10.0.2",
+      "build_command": "dotnet publish -c Release -o publish",
+      "exit_code": 0,
+      "cold_build_duration_ms": 835,
+      "incremental_build_duration_ms": 835,
+      "binary_size_bytes": null,
+      "publish_dir_size_bytes": 1654039,
+      "image_size_bytes": null,
+      "dependencies_count": 12,
+      "warnings_count": 0,
+      "errors": [],
+      "stdout_excerpt": "microservice -> publish/",
+      "notes": "Publish dir is 1.58 MB but requires .NET 10 runtime installed on host (~200 MB). Binary is a DLL, not standalone executable. Actual deploy size depends on whether runtime is pre-installed."
+    }
+  ]
+}

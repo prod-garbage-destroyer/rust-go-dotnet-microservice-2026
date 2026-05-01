@@ -1,0 +1,43 @@
+{
+  "targets": [
+    {
+      "name": "rust-axum",
+      "test_command": "manual functional smoke tests via curl",
+      "exit_code": 0,
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 1200,
+      "coverage_pct": null,
+      "failures": [],
+      "notes": "Tested: POST /users (201), GET /users/:id (200), GET /users (200 array), DELETE /users/:id (204), GET /users/:id after delete (404), GET /health (200). All passed."
+    },
+    {
+      "name": "go-fiber",
+      "test_command": "manual functional smoke tests via curl",
+      "exit_code": 0,
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 800,
+      "coverage_pct": null,
+      "failures": [],
+      "notes": "All endpoint contracts verified. Response shapes match spec."
+    },
+    {
+      "name": "dotnet-minimal",
+      "test_command": "manual functional smoke tests via curl",
+      "exit_code": 0,
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 900,
+      "coverage_pct": null,
+      "failures": [],
+      "notes": "All endpoint contracts verified. Response shapes match spec."
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+experiment:
+  slug: rust-go-dotnet-microservice-2026
+  topic: "Rust (Axum) vs Go (Fiber) vs ASP.NET (Minimal API) — Microservice Backend Benchmark 2026"
+  experiment_type: combined
+  primary_metric: p95_latency_ms
+  targets:
+    - name: rust-axum
+      language: Rust
+      framework: Axum 0.8
+      toolchain: rustc 1.93.1
+    - name: go-fiber
+      language: Go
+      framework: Fiber v2
+      toolchain: go1.26.2
+    - name: dotnet-minimal
+      language: C#
+      framework: ASP.NET Minimal API (.NET 10)
+      toolchain: dotnet 10.0.107
+
+endpoints:
+  - method: POST
+    path: /users
+    request_body:
+      name: string (required, 1-100 chars)
+      email: string (required, valid email format)
+    response_body:
+      id: uuid
+      name: string
+      email: string
+      created_at: ISO8601 timestamp
+    status_success: 201
+    status_validation_error: 422
+    side_effect: triggers background async job (log "email sent to <email>")
+
+  - method: GET
+    path: /users/:id
+    response_body:
+      id: uuid
+      name: string
+      email: string
+      created_at: ISO8601 timestamp
+    status_success: 200
+    status_not_found: 404
+
+  - method: GET
+    path: /users
+    response_body: array of user objects (same shape as above)
+    status_success: 200
+
+  - method: DELETE
+    path: /users/:id
+    status_success: 204
+    status_not_found: 404
+
+  - method: GET
+    path: /health
+    response_body:
+      status: "ok"
+    status_success: 200
+
+database:
+  engine: PostgreSQL 16
+  schema:
+    table: users
+    columns:
+      - name: id
+        type: UUID
+        primary_key: true
+        default: gen_random_uuid()
+      - name: name
+        type: VARCHAR(100)
+        nullable: false
+      - name: email
+        type: VARCHAR(255)
+        nullable: false
+        unique: true
+      - name: created_at
+        type: TIMESTAMPTZ
+        nullable: false
+        default: NOW()
+    indexes:
+      - column: email
+        type: UNIQUE
+
+background_job:
+  trigger: POST /users success
+  behavior: async (non-blocking), logs "NOTIFY: email sent to <email> at <timestamp>"
+  must_not_block_response: true
+
+validation_rules:
+  - field: name
+    rules: [required, min_length=1, max_length=100]
+  - field: email
+    rules: [required, valid_email_format]
+
+connection_pool:
+  min_connections: 5
+  max_connections: 20
+  all_targets: true
+
+benchmark:
+  tool: wrk
+  warmup:
+    duration_seconds: 10
+    concurrency: 50
+    endpoint: GET /health
+  phases:
+    - name: low_load
+      concurrency: 50
+      duration_seconds: 30
+      request_mix: "70% GET /users/:id, 30% POST /users"
+    - name: high_load
+      concurrency: 200
+      duration_seconds: 30
+      request_mix: "70% GET /users/:id, 30% POST /users"
+    - name: stress
+      concurrency: 500
+      duration_seconds: 30
+      request_mix: "70% GET /users/:id, 30% POST /users"
+  measurement_runs: 5
+  metrics_collected:
+    - startup_time_ms
+    - cold_start_time_ms
+    - memory_rss_mb
+    - requests_per_second
+    - p50_latency_ms
+    - p95_latency_ms
+    - p99_latency_ms
+    - error_rate_pct
+    - build_time_ms
+    - binary_size_bytes
+
+ports:
+  rust-axum: 3001
+  go-fiber: 3002
+  dotnet-minimal: 3003
+  postgres: 5432
