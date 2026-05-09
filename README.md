@@ -1,11 +1,11 @@
-# Rust Go .NET Microservice Benchmark 2026
+# Rust Go .NET Microservice Benchmark 2026 (v2 artifacts + implementations)
 
-This branch contains the baseline benchmark project for Rust Axum, Go Fiber, and ASP.NET minimal API with shared fairness constraints and reproducible artifacts.
+This branch focuses on the v2 cut that updates implementation logic and benchmark artifacts for the Rust/Go/.NET comparison.
 
 ## Included
-- `implementations/` service implementations
-- `artifacts/` benchmark outputs and summaries
-- baseline benchmark specification (`spec.yaml`)
+- `implementations/` v2 service logic updates
+- `artifacts/` v2 benchmark summaries and comparison data
+- baseline spec (`spec.yaml`) with v2-compatible outputs
 
 ## Channel
 - YouTube: https://www.youtube.com/@prod.garbagedestroyer
