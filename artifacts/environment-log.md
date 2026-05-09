@@ -83,3 +83,12 @@ podman network rm bench-net
 - Port 5432 was occupied by a local macOS PostgreSQL instance; Podman container was mapped to 5433
 - All services ran bare-metal (not in containers) for consistent host-level memory measurement
 - Podman machine was pre-existing (`podman-machine-default`)
+
+---
+
+## v2 Baseline Harness Notes (prep)
+
+- Benchmark scripts are now versioned in repo under `bench/wrk/`.
+- Baseline runner added at `bench/scripts/run-v2-baseline.sh`.
+- Request-level notify logging can be disabled for fair timed runs with `BENCH_NOTIFY_LOG=false`.
+- All services now enforce explicit DB pool parity (`min=5`, `max=20`) in code and print benchmark config at startup.

@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"os"
@@ -34,7 +36,46 @@ type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
+type JsonRoundtripItem struct {
+	ID      string   `json:"id"`
+	Score   int64    `json:"score"`
+	Enabled bool     `json:"enabled"`
+	Tags    []string `json:"tags"`
+}
+
+type JsonRoundtripPayload struct {
+	Tenant    string              `json:"tenant"`
+	Region    string              `json:"region"`
+	Timestamp string              `json:"timestamp"`
+	Items     []JsonRoundtripItem `json:"items"`
+}
+
+type JsonRoundtripResponse struct {
+	Tenant       string `json:"tenant"`
+	Region       string `json:"region"`
+	ItemsCount   int    `json:"items_count"`
+	EnabledCount int    `json:"enabled_count"`
+	ScoreSum     int64  `json:"score_sum"`
+	TagCount     int    `json:"tag_count"`
+}
+
+type CryptoHashPayload struct {
+	Input  string `json:"input"`
+	Rounds *int   `json:"rounds"`
+}
+
+type CryptoHashResponse struct {
+	Algorithm string `json:"algorithm"`
+	Rounds    int    `json:"rounds"`
+	DigestHex string `json:"digest_hex"`
+}
+
 var validate = validator.New()
+
+const (
+	poolMinConns int32 = 5
+	poolMaxConns int32 = 20
+)
 
 func main() {
 	dbURL := os.Getenv("DATABASE_URL")
@@ -50,14 +91,22 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to parse DB config:", err)
 	}
-	config.MinConns = 5
-	config.MaxConns = 20
+	config.MinConns = poolMinConns
+	config.MaxConns = poolMaxConns
 
 	pool, err := pgxpool.NewWithConfig(context.Background(), config)
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
 	defer pool.Close()
+
+	notifyLogEnabled := true
+	if v, ok := os.LookupEnv("BENCH_NOTIFY_LOG"); ok {
+		switch v {
+		case "0", "false", "FALSE", "off", "OFF":
+			notifyLogEnabled = false
+		}
+	}
 
 	// Run migrations
 	_, err = pool.Exec(context.Background(), `
@@ -80,6 +129,69 @@ func main() {
 		return c.JSON(HealthResponse{Status: "ok"})
 	})
 
+	app.Post("/json/roundtrip", func(c *fiber.Ctx) error {
+		var payload JsonRoundtripPayload
+		if err := c.BodyParser(&payload); err != nil {
+			return c.Status(422).JSON(ErrorResponse{Error: err.Error()})
+		}
+		if len(payload.Items) == 0 {
+			return c.Status(422).JSON(ErrorResponse{Error: "items must contain at least 1 entry"})
+		}
+
+		enabledCount := 0
+		scoreSum := int64(0)
+		tagCount := 0
+		for _, item := range payload.Items {
+			if item.Enabled {
+				enabledCount++
+			}
+			scoreSum += item.Score
+			tagCount += len(item.Tags)
+		}
+
+		return c.JSON(JsonRoundtripResponse{
+			Tenant:       payload.Tenant,
+			Region:       payload.Region,
+			ItemsCount:   len(payload.Items),
+			EnabledCount: enabledCount,
+			ScoreSum:     scoreSum,
+			TagCount:     tagCount,
+		})
+	})
+
+	app.Post("/crypto/hash", func(c *fiber.Ctx) error {
+		var payload CryptoHashPayload
+		if err := c.BodyParser(&payload); err != nil {
+			return c.Status(422).JSON(ErrorResponse{Error: err.Error()})
+		}
+		if payload.Input == "" {
+			return c.Status(422).JSON(ErrorResponse{Error: "input must not be empty"})
+		}
+
+		rounds := 2000
+		if payload.Rounds != nil {
+			rounds = *payload.Rounds
+		}
+		if rounds < 1 {
+			rounds = 1
+		}
+		if rounds > 20000 {
+			rounds = 20000
+		}
+
+		bytes := []byte(payload.Input)
+		for i := 0; i < rounds; i++ {
+			hash := sha256.Sum256(bytes)
+			bytes = hash[:]
+		}
+
+		return c.JSON(CryptoHashResponse{
+			Algorithm: "sha256",
+			Rounds:    rounds,
+			DigestHex: hex.EncodeToString(bytes),
+		})
+	})
+
 	app.Post("/users", func(c *fiber.Ctx) error {
 		var req CreateUserRequest
 		if err := c.BodyParser(&req); err != nil {
@@ -100,7 +212,9 @@ func main() {
 
 		// Non-blocking background job
 		go func(email string) {
-			fmt.Printf("NOTIFY: email sent to %s at %s\n", email, time.Now().Format(time.RFC3339))
+			if notifyLogEnabled {
+				fmt.Printf("NOTIFY: email sent to %s at %s\n", email, time.Now().Format(time.RFC3339))
+			}
 		}(user.Email)
 
 		return c.Status(201).JSON(user)
@@ -165,5 +279,11 @@ func main() {
 	})
 
 	log.Printf("go-fiber listening on :%s", port)
+	log.Printf(
+		"benchmark config: pool_min=%d, pool_max=%d, notify_log_enabled=%t",
+		poolMinConns,
+		poolMaxConns,
+		notifyLogEnabled,
+	)
 	log.Fatal(app.Listen(":" + port))
 }

@@ -2,11 +2,12 @@ use axum::{
     extract::{Path, State},
     http::StatusCode,
     response::Json,
-    routing::{delete, get, post},
+    routing::{get, post},
     Router,
 };
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use sqlx::{postgres::PgPoolOptions, PgPool};
 use std::net::SocketAddr;
 use tokio::task;
@@ -16,6 +17,7 @@ use validator::Validate;
 #[derive(Clone)]
 struct AppState {
     pool: PgPool,
+    notify_log_enabled: bool,
 }
 
 #[derive(Debug, Serialize, sqlx::FromRow)]
@@ -44,8 +46,103 @@ struct ErrorResponse {
     error: String,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+struct JsonRoundtripItem {
+    id: String,
+    score: i64,
+    enabled: bool,
+    tags: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct JsonRoundtripPayload {
+    tenant: String,
+    region: String,
+    timestamp: String,
+    items: Vec<JsonRoundtripItem>,
+}
+
+#[derive(Serialize)]
+struct JsonRoundtripResponse {
+    tenant: String,
+    region: String,
+    items_count: usize,
+    enabled_count: usize,
+    score_sum: i64,
+    tag_count: usize,
+}
+
+#[derive(Debug, Deserialize)]
+struct CryptoHashPayload {
+    input: String,
+    rounds: Option<u32>,
+}
+
+#[derive(Serialize)]
+struct CryptoHashResponse {
+    algorithm: &'static str,
+    rounds: u32,
+    digest_hex: String,
+}
+
 async fn health() -> Json<HealthResponse> {
     Json(HealthResponse { status: "ok" })
+}
+
+async fn json_roundtrip(
+    Json(payload): Json<JsonRoundtripPayload>,
+) -> Result<Json<JsonRoundtripResponse>, (StatusCode, Json<ErrorResponse>)> {
+    if payload.items.is_empty() {
+        return Err((
+            StatusCode::UNPROCESSABLE_ENTITY,
+            Json(ErrorResponse {
+                error: "items must contain at least 1 entry".to_string(),
+            }),
+        ));
+    }
+
+    let enabled_count = payload.items.iter().filter(|item| item.enabled).count();
+    let score_sum: i64 = payload.items.iter().map(|item| item.score).sum();
+    let tag_count: usize = payload.items.iter().map(|item| item.tags.len()).sum();
+
+    Ok(Json(JsonRoundtripResponse {
+        tenant: payload.tenant,
+        region: payload.region,
+        items_count: payload.items.len(),
+        enabled_count,
+        score_sum,
+        tag_count,
+    }))
+}
+
+async fn crypto_hash(
+    Json(payload): Json<CryptoHashPayload>,
+) -> Result<Json<CryptoHashResponse>, (StatusCode, Json<ErrorResponse>)> {
+    if payload.input.is_empty() {
+        return Err((
+            StatusCode::UNPROCESSABLE_ENTITY,
+            Json(ErrorResponse {
+                error: "input must not be empty".to_string(),
+            }),
+        ));
+    }
+
+    let rounds = payload.rounds.unwrap_or(2000).clamp(1, 20000);
+    let mut bytes = payload.input.into_bytes();
+
+    for _ in 0..rounds {
+        let mut hasher = Sha256::new();
+        hasher.update(&bytes);
+        bytes = hasher.finalize().to_vec();
+    }
+
+    let digest_hex = bytes.iter().map(|b| format!("{:02x}", b)).collect::<String>();
+
+    Ok(Json(CryptoHashResponse {
+        algorithm: "sha256",
+        rounds,
+        digest_hex,
+    }))
 }
 
 async fn create_user(
@@ -55,7 +152,9 @@ async fn create_user(
     if let Err(e) = payload.validate() {
         return Err((
             StatusCode::UNPROCESSABLE_ENTITY,
-            Json(ErrorResponse { error: e.to_string() }),
+            Json(ErrorResponse {
+                error: e.to_string(),
+            }),
         ));
     }
 
@@ -69,14 +168,19 @@ async fn create_user(
     .map_err(|e| {
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(ErrorResponse { error: e.to_string() }),
+            Json(ErrorResponse {
+                error: e.to_string(),
+            }),
         )
     })?;
 
     let email = user.email.clone();
+    let notify_log_enabled = state.notify_log_enabled;
     task::spawn(async move {
-        let ts = Utc::now();
-        println!("NOTIFY: email sent to {} at {}", email, ts);
+        if notify_log_enabled {
+            let ts = Utc::now();
+            println!("NOTIFY: email sent to {} at {}", email, ts);
+        }
     });
 
     Ok((StatusCode::CREATED, Json(user)))
@@ -86,24 +190,27 @@ async fn get_user(
     State(state): State<AppState>,
     Path(id): Path<Uuid>,
 ) -> Result<Json<User>, (StatusCode, Json<ErrorResponse>)> {
-    let user = sqlx::query_as::<_, User>(
-        "SELECT id, name, email, created_at FROM users WHERE id = $1",
-    )
-    .bind(id)
-    .fetch_optional(&state.pool)
-    .await
-    .map_err(|e| {
-        (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(ErrorResponse { error: e.to_string() }),
-        )
-    })?;
+    let user =
+        sqlx::query_as::<_, User>("SELECT id, name, email, created_at FROM users WHERE id = $1")
+            .bind(id)
+            .fetch_optional(&state.pool)
+            .await
+            .map_err(|e| {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(ErrorResponse {
+                        error: e.to_string(),
+                    }),
+                )
+            })?;
 
     match user {
         Some(u) => Ok(Json(u)),
         None => Err((
             StatusCode::NOT_FOUND,
-            Json(ErrorResponse { error: "user not found".to_string() }),
+            Json(ErrorResponse {
+                error: "user not found".to_string(),
+            }),
         )),
     }
 }
@@ -119,7 +226,9 @@ async fn list_users(
     .map_err(|e| {
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(ErrorResponse { error: e.to_string() }),
+            Json(ErrorResponse {
+                error: e.to_string(),
+            }),
         )
     })?;
 
@@ -137,14 +246,18 @@ async fn delete_user(
         .map_err(|e| {
             (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                Json(ErrorResponse { error: e.to_string() }),
+                Json(ErrorResponse {
+                    error: e.to_string(),
+                }),
             )
         })?;
 
     if result.rows_affected() == 0 {
         return Err((
             StatusCode::NOT_FOUND,
-            Json(ErrorResponse { error: "user not found".to_string() }),
+            Json(ErrorResponse {
+                error: "user not found".to_string(),
+            }),
         ));
     }
 
@@ -153,8 +266,10 @@ async fn delete_user(
 
 #[tokio::main]
 async fn main() {
-    tracing_subscriber::fmt::init();
     dotenvy::dotenv().ok();
+
+    const POOL_MIN_CONNECTIONS: u32 = 5;
+    const POOL_MAX_CONNECTIONS: u32 = 20;
 
     let database_url = std::env::var("DATABASE_URL")
         .unwrap_or_else(|_| "postgres://bench:bench@localhost:5432/bench".to_string());
@@ -164,9 +279,16 @@ async fn main() {
         .parse()
         .expect("PORT must be a number");
 
+    let notify_log_enabled = std::env::var("BENCH_NOTIFY_LOG")
+        .map(|v| {
+            let normalized = v.trim().to_ascii_lowercase();
+            !(normalized == "0" || normalized == "false" || normalized == "off")
+        })
+        .unwrap_or(true);
+
     let pool = PgPoolOptions::new()
-        .min_connections(5)
-        .max_connections(20)
+        .min_connections(POOL_MIN_CONNECTIONS)
+        .max_connections(POOL_MAX_CONNECTIONS)
         .connect(&database_url)
         .await
         .expect("Failed to connect to database");
@@ -183,16 +305,25 @@ async fn main() {
     .await
     .expect("Failed to run migrations");
 
-    let state = AppState { pool };
+    let state = AppState {
+        pool,
+        notify_log_enabled,
+    };
 
     let app = Router::new()
         .route("/health", get(health))
+        .route("/json/roundtrip", post(json_roundtrip))
+        .route("/crypto/hash", post(crypto_hash))
         .route("/users", post(create_user).get(list_users))
         .route("/users/{id}", get(get_user).delete(delete_user))
         .with_state(state);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     println!("rust-axum listening on {}", addr);
+    println!(
+        "benchmark config: pool_min={}, pool_max={}, notify_log_enabled={}",
+        POOL_MIN_CONNECTIONS, POOL_MAX_CONNECTIONS, notify_log_enabled
+    );
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
