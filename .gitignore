@@ -1,2 +1,5 @@
 implementations/rust-axum/target/
 implementations/go-fiber/microservice
+**/bin/
+**/obj/
+implementations/dotnet-minimal/microservice/publish/
