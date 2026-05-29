@@ -53,7 +53,7 @@
     {
       "target": "rust-axum",
       "run_dir": "bench/results/rust-axum/v3-20260526-212300-rust-axum",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/benchmark-results-v2.json",
+      "source_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/benchmark-results-v2.json",
       "read_rps_c50": 20476.39,
       "read_rps_c200": 22462.2,
       "read_rps_c500": 21884.37,
@@ -79,7 +79,7 @@
     {
       "target": "go-fiber",
       "run_dir": "bench/results/go-fiber/v3-20260526-213932-go-fiber",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/benchmark-results-v2.json",
+      "source_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/benchmark-results-v2.json",
       "read_rps_c50": 22093.95,
       "read_rps_c200": 11982.2,
       "read_rps_c500": 8229.3,
@@ -105,7 +105,7 @@
     {
       "target": "go-nethttp-chi",
       "run_dir": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/benchmark-results-v2.json",
+      "source_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/benchmark-results-v2.json",
       "read_rps_c50": 19097.99,
       "read_rps_c200": 18759.85,
       "read_rps_c500": 19840.8,
@@ -131,7 +131,7 @@
     {
       "target": "dotnet-aot",
       "run_dir": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/benchmark-results-v2.json",
+      "source_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/benchmark-results-v2.json",
       "read_rps_c50": 18291.37,
       "read_rps_c200": 17283.2,
       "read_rps_c500": 17733.42,
@@ -158,7 +158,7 @@
   "runs": [
     {
       "target": "rust-axum",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/benchmark-results-v2.json",
+      "source_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/benchmark-results-v2.json",
       "payload": {
         "schema_version": "benchmark-results-v2-1",
         "target": "rust-axum",
@@ -172,7 +172,7 @@
         "wrk_baseline": {
           "schema_version": "v2-baseline-1",
           "target": "rust-axum",
-          "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum",
+          "run_dir": "bench/results/rust-axum/v3-20260526-212300-rust-axum",
           "generated_at_utc": "2026-05-26T19:25:21Z",
           "measurements": [
             {
@@ -192,7 +192,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/warmup-health.txt"
+              "raw_output_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/warmup-health.txt"
             },
             {
               "phase": "read",
@@ -211,7 +211,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/read-c50.txt"
+              "raw_output_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/read-c50.txt"
             },
             {
               "phase": "read",
@@ -230,7 +230,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/read-c200.txt"
+              "raw_output_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/read-c200.txt"
             },
             {
               "phase": "read",
@@ -249,7 +249,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/read-c500.txt"
+              "raw_output_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/read-c500.txt"
             },
             {
               "phase": "write",
@@ -268,7 +268,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-212300-rust-axum/write-c50.txt"
+              "raw_output_file": "bench/results/rust-axum/v3-20260526-212300-rust-axum/write-c50.txt"
             }
           ]
         },
@@ -624,7 +624,7 @@
     },
     {
       "target": "go-fiber",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/benchmark-results-v2.json",
+      "source_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/benchmark-results-v2.json",
       "payload": {
         "schema_version": "benchmark-results-v2-1",
         "target": "go-fiber",
@@ -638,7 +638,7 @@
         "wrk_baseline": {
           "schema_version": "v2-baseline-1",
           "target": "go-fiber",
-          "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber",
+          "run_dir": "bench/results/go-fiber/v3-20260526-213932-go-fiber",
           "generated_at_utc": "2026-05-26T19:41:52Z",
           "measurements": [
             {
@@ -658,7 +658,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/warmup-health.txt"
+              "raw_output_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/warmup-health.txt"
             },
             {
               "phase": "read",
@@ -677,7 +677,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/read-c50.txt"
+              "raw_output_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/read-c50.txt"
             },
             {
               "phase": "read",
@@ -696,7 +696,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/read-c200.txt"
+              "raw_output_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/read-c200.txt"
             },
             {
               "phase": "read",
@@ -715,7 +715,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/read-c500.txt"
+              "raw_output_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/read-c500.txt"
             },
             {
               "phase": "write",
@@ -734,7 +734,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-213932-go-fiber/write-c50.txt"
+              "raw_output_file": "bench/results/go-fiber/v3-20260526-213932-go-fiber/write-c50.txt"
             }
           ]
         },
@@ -1090,7 +1090,7 @@
     },
     {
       "target": "go-nethttp-chi",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/benchmark-results-v2.json",
+      "source_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/benchmark-results-v2.json",
       "payload": {
         "schema_version": "benchmark-results-v2-1",
         "target": "go-nethttp-chi",
@@ -1104,7 +1104,7 @@
         "wrk_baseline": {
           "schema_version": "v2-baseline-1",
           "target": "go-nethttp-chi",
-          "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi",
+          "run_dir": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi",
           "generated_at_utc": "2026-05-26T19:58:30Z",
           "measurements": [
             {
@@ -1124,7 +1124,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/warmup-health.txt"
+              "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/warmup-health.txt"
             },
             {
               "phase": "read",
@@ -1143,7 +1143,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c50.txt"
+              "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c50.txt"
             },
             {
               "phase": "read",
@@ -1162,7 +1162,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c200.txt"
+              "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c200.txt"
             },
             {
               "phase": "read",
@@ -1181,7 +1181,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c500.txt"
+              "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c500.txt"
             },
             {
               "phase": "write",
@@ -1200,7 +1200,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/write-c50.txt"
+              "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/write-c50.txt"
             }
           ]
         },
@@ -1556,7 +1556,7 @@
     },
     {
       "target": "dotnet-aot",
-      "source_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/benchmark-results-v2.json",
+      "source_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/benchmark-results-v2.json",
       "payload": {
         "schema_version": "benchmark-results-v2-1",
         "target": "dotnet-aot",
@@ -1570,7 +1570,7 @@
         "wrk_baseline": {
           "schema_version": "v2-baseline-1",
           "target": "dotnet-aot",
-          "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot",
+          "run_dir": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot",
           "generated_at_utc": "2026-05-26T19:04:30Z",
           "measurements": [
             {
@@ -1590,7 +1590,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/warmup-health.txt"
+              "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/warmup-health.txt"
             },
             {
               "phase": "read",
@@ -1609,7 +1609,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c50.txt"
+              "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c50.txt"
             },
             {
               "phase": "read",
@@ -1628,7 +1628,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c200.txt"
+              "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c200.txt"
             },
             {
               "phase": "read",
@@ -1647,7 +1647,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c500.txt"
+              "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c500.txt"
             },
             {
               "phase": "write",
@@ -1666,7 +1666,7 @@
                 "p99_ms": null
               },
               "non_2xx_3xx_responses": 0,
-              "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/write-c50.txt"
+              "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/write-c50.txt"
             }
           ]
         },

@@ -3,7 +3,7 @@
   "target": "dotnet-jit",
   "scenario": "tail-latency",
   "generated_at_utc": "2026-05-09T07:46:12Z",
-  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/k6-tail-summary.json",
+  "source_summary_file": "bench/results/dotnet-jit/20260509-090451/k6-tail-summary.json",
   "checks": {
     "passes": {
       "status is 200 or 404": {

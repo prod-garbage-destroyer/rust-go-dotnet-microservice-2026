@@ -3,7 +3,7 @@
   "target": "go-fiber",
   "scenario": "tail-latency",
   "generated_at_utc": "2026-05-26T18:11:37Z",
-  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/k6-tail-summary.json",
+  "source_summary_file": "bench/results/go-fiber/v3-20260526-200146-go-fiber/k6-tail-summary.json",
   "checks": {
     "passes": {
       "status is 200 or 404": {

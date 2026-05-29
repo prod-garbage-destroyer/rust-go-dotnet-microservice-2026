@@ -2,7 +2,7 @@
   "schema_version": "benchmark-results-v2-1",
   "target": "dotnet-jit",
   "generated_at_utc": "2026-05-09T07:52:14Z",
-  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451",
+  "run_dir": "bench/results/dotnet-jit/20260509-090451",
   "inputs": {
     "wrk": "benchmark-results.json",
     "k6_tail": "k6-tail-normalized.json",
@@ -11,7 +11,7 @@
   "wrk_baseline": {
     "schema_version": "v2-baseline-1",
     "target": "dotnet-jit",
-    "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451",
+    "run_dir": "bench/results/dotnet-jit/20260509-090451",
     "generated_at_utc": "2026-05-09T07:38:39Z",
     "measurements": [
       {
@@ -31,7 +31,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/warmup-health.txt"
+        "raw_output_file": "bench/results/dotnet-jit/20260509-090451/warmup-health.txt"
       },
       {
         "phase": "read",
@@ -50,7 +50,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/read-c50.txt"
+        "raw_output_file": "bench/results/dotnet-jit/20260509-090451/read-c50.txt"
       },
       {
         "phase": "read",
@@ -69,7 +69,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/read-c200.txt"
+        "raw_output_file": "bench/results/dotnet-jit/20260509-090451/read-c200.txt"
       },
       {
         "phase": "read",
@@ -88,7 +88,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/read-c500.txt"
+        "raw_output_file": "bench/results/dotnet-jit/20260509-090451/read-c500.txt"
       },
       {
         "phase": "write",
@@ -107,7 +107,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/write-c50.txt"
+        "raw_output_file": "bench/results/dotnet-jit/20260509-090451/write-c50.txt"
       }
     ]
   },
@@ -116,7 +116,7 @@
     "target": "dotnet-jit",
     "scenario": "tail-latency",
     "generated_at_utc": "2026-05-09T07:46:12Z",
-    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/k6-tail-summary.json",
+    "source_summary_file": "bench/results/dotnet-jit/20260509-090451/k6-tail-summary.json",
     "checks": {
       "passes": {
         "status is 200 or 404": {
@@ -293,7 +293,7 @@
     "target": "dotnet-jit",
     "scenario": "pool-saturation-recovery",
     "generated_at_utc": "2026-05-09T07:52:14Z",
-    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/k6-pool-saturation-summary.json",
+    "source_summary_file": "bench/results/dotnet-jit/20260509-090451/k6-pool-saturation-summary.json",
     "checks": {
       "passes": {
         "status is 200 or 404": {

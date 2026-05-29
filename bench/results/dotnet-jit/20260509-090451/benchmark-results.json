@@ -1,7 +1,7 @@
 {
   "schema_version": "v2-baseline-1",
   "target": "dotnet-jit",
-  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451",
+  "run_dir": "bench/results/dotnet-jit/20260509-090451",
   "generated_at_utc": "2026-05-09T07:38:39Z",
   "measurements": [
     {
@@ -21,7 +21,7 @@
         "p99_ms": null
       },
       "non_2xx_3xx_responses": 0,
-      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/warmup-health.txt"
+      "raw_output_file": "bench/results/dotnet-jit/20260509-090451/warmup-health.txt"
     },
     {
       "phase": "read",
@@ -40,7 +40,7 @@
         "p99_ms": null
       },
       "non_2xx_3xx_responses": 0,
-      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/read-c50.txt"
+      "raw_output_file": "bench/results/dotnet-jit/20260509-090451/read-c50.txt"
     },
     {
       "phase": "read",
@@ -59,7 +59,7 @@
         "p99_ms": null
       },
       "non_2xx_3xx_responses": 0,
-      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/read-c200.txt"
+      "raw_output_file": "bench/results/dotnet-jit/20260509-090451/read-c200.txt"
     },
     {
       "phase": "read",
@@ -78,7 +78,7 @@
         "p99_ms": null
       },
       "non_2xx_3xx_responses": 0,
-      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/read-c500.txt"
+      "raw_output_file": "bench/results/dotnet-jit/20260509-090451/read-c500.txt"
     },
     {
       "phase": "write",
@@ -97,7 +97,7 @@
         "p99_ms": null
       },
       "non_2xx_3xx_responses": 0,
-      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/write-c50.txt"
+      "raw_output_file": "bench/results/dotnet-jit/20260509-090451/write-c50.txt"
     }
   ]
 }

@@ -11,7 +11,7 @@
   "wrk_baseline": {
     "schema_version": "v2-baseline-1",
     "target": "go-nethttp-chi",
-    "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi",
+    "run_dir": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi",
     "generated_at_utc": "2026-05-26T19:58:30Z",
     "measurements": [
       {
@@ -31,7 +31,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/warmup-health.txt"
+        "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/warmup-health.txt"
       },
       {
         "phase": "read",
@@ -50,7 +50,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c50.txt"
+        "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c50.txt"
       },
       {
         "phase": "read",
@@ -69,7 +69,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c200.txt"
+        "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c200.txt"
       },
       {
         "phase": "read",
@@ -88,7 +88,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c500.txt"
+        "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/read-c500.txt"
       },
       {
         "phase": "write",
@@ -107,7 +107,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/write-c50.txt"
+        "raw_output_file": "bench/results/go-nethttp-chi/v3-20260526-215610-go-nethttp-chi/write-c50.txt"
       }
     ]
   },

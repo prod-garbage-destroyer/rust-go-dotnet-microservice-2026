@@ -2,7 +2,7 @@
   "schema_version": "benchmark-results-v2-1",
   "target": "go-fiber",
   "generated_at_utc": "2026-05-23T11:39:21Z",
-  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber",
+  "run_dir": "bench/results/go-fiber/v3-20260523-115219-go-fiber",
   "inputs": {
     "wrk": "benchmark-results.json",
     "k6_tail": "k6-tail-normalized.json",
@@ -11,7 +11,7 @@
   "wrk_baseline": {
     "schema_version": "v2-baseline-1",
     "target": "go-fiber",
-    "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber",
+    "run_dir": "bench/results/go-fiber/v3-20260523-115219-go-fiber",
     "generated_at_utc": "2026-05-23T10:25:46Z",
     "measurements": [
       {
@@ -31,7 +31,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/warmup-health.txt"
+        "raw_output_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/warmup-health.txt"
       },
       {
         "phase": "read",
@@ -50,7 +50,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/read-c50.txt"
+        "raw_output_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/read-c50.txt"
       },
       {
         "phase": "read",
@@ -69,7 +69,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/read-c200.txt"
+        "raw_output_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/read-c200.txt"
       },
       {
         "phase": "read",
@@ -88,7 +88,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/read-c500.txt"
+        "raw_output_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/read-c500.txt"
       },
       {
         "phase": "write",
@@ -107,7 +107,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/write-c50.txt"
+        "raw_output_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/write-c50.txt"
       }
     ]
   },
@@ -116,7 +116,7 @@
     "target": "go-fiber",
     "scenario": "tail-latency",
     "generated_at_utc": "2026-05-23T10:33:17Z",
-    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/k6-tail-summary.json",
+    "source_summary_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/k6-tail-summary.json",
     "checks": {
       "passes": {
         "status is 200 or 404": {
@@ -293,7 +293,7 @@
     "target": "go-fiber",
     "scenario": "pool-saturation-recovery",
     "generated_at_utc": "2026-05-23T11:39:21Z",
-    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260523-115219-go-fiber/k6-pool-saturation-summary.json",
+    "source_summary_file": "bench/results/go-fiber/v3-20260523-115219-go-fiber/k6-pool-saturation-summary.json",
     "checks": {
       "passes": {
         "status is 200 or 404": {

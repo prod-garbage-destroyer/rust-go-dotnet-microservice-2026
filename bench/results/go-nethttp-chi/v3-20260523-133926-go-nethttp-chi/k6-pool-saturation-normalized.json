@@ -3,7 +3,7 @@
   "target": "go-nethttp-chi",
   "scenario": "pool-saturation-recovery",
   "generated_at_utc": "2026-05-23T11:55:20Z",
-  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/k6-pool-saturation-summary.json",
+  "source_summary_file": "bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/k6-pool-saturation-summary.json",
   "checks": {
     "passes": {
       "status is 200 or 404": {

@@ -7,7 +7,7 @@
 
 
      execution: local
-        script: /Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/k6/tail-latency.js
+        script: bench/k6/tail-latency.js
         output: -
 
      scenarios: (100.00%) 1 scenario, 3000 max VUs, 8m0s max duration (incl. graceful stop):

@@ -3,7 +3,7 @@
   "target": "go-fiber",
   "scenario": "pool-saturation-recovery",
   "generated_at_utc": "2026-05-09T07:36:23Z",
-  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451/k6-pool-saturation-summary.json",
+  "source_summary_file": "bench/results/go-fiber/20260509-090451/k6-pool-saturation-summary.json",
   "checks": {
     "passes": {
       "status is 200 or 404": {

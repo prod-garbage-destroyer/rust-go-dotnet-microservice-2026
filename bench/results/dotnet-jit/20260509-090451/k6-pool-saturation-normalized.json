@@ -3,7 +3,7 @@
   "target": "dotnet-jit",
   "scenario": "pool-saturation-recovery",
   "generated_at_utc": "2026-05-09T07:52:14Z",
-  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-jit/20260509-090451/k6-pool-saturation-summary.json",
+  "source_summary_file": "bench/results/dotnet-jit/20260509-090451/k6-pool-saturation-summary.json",
   "checks": {
     "passes": {
       "status is 200 or 404": {

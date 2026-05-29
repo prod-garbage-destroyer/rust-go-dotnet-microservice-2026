@@ -11,7 +11,7 @@
   "wrk_baseline": {
     "schema_version": "v2-baseline-1",
     "target": "dotnet-aot",
-    "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot",
+    "run_dir": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot",
     "generated_at_utc": "2026-05-26T19:04:30Z",
     "measurements": [
       {
@@ -31,7 +31,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/warmup-health.txt"
+        "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/warmup-health.txt"
       },
       {
         "phase": "read",
@@ -50,7 +50,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c50.txt"
+        "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c50.txt"
       },
       {
         "phase": "read",
@@ -69,7 +69,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c200.txt"
+        "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c200.txt"
       },
       {
         "phase": "read",
@@ -88,7 +88,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c500.txt"
+        "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/read-c500.txt"
       },
       {
         "phase": "write",
@@ -107,7 +107,7 @@
           "p99_ms": null
         },
         "non_2xx_3xx_responses": 0,
-        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/write-c50.txt"
+        "raw_output_file": "bench/results/dotnet-aot/v3-20260526-210210-dotnet-aot/write-c50.txt"
       }
     ]
   },

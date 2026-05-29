@@ -3,7 +3,7 @@
   "target": "rust-axum",
   "scenario": "tail-latency",
   "generated_at_utc": "2026-05-09T06:58:32Z",
-  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/20260509-084849/k6-tail-summary.json",
+  "source_summary_file": "bench/results/rust-axum/20260509-084849/k6-tail-summary.json",
   "checks": {
     "passes": {
       "status is 200 or 404": {

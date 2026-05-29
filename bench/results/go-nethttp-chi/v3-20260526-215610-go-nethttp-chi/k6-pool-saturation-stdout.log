@@ -7,7 +7,7 @@
 
 
      execution: local
-        script: /Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/k6/scenarios/pool-saturation-recovery.js
+        script: bench/k6/scenarios/pool-saturation-recovery.js
         output: -
 
      scenarios: (100.00%) 1 scenario, 800 max VUs, 6m30s max duration (incl. graceful stop):
