@@ -1,0 +1,444 @@
+{
+  "schema_version": "benchmark-results-v2-1",
+  "target": "go-fiber",
+  "generated_at_utc": "2026-05-26T18:17:39Z",
+  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber",
+  "inputs": {
+    "wrk": "benchmark-results.json",
+    "k6_tail": "k6-tail-normalized.json",
+    "k6_pool_saturation_recovery": "k6-pool-saturation-normalized.json"
+  },
+  "wrk_baseline": {
+    "schema_version": "v2-baseline-1",
+    "target": "go-fiber",
+    "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber",
+    "generated_at_utc": "2026-05-26T18:04:06Z",
+    "measurements": [
+      {
+        "phase": "warmup",
+        "endpoint": "GET /health",
+        "concurrency": 50,
+        "duration_seconds": 10,
+        "requests_sec": 30842.45,
+        "transfer_sec_bytes": 3795845.12,
+        "latency": {
+          "avg_ms": 1.68,
+          "stdev_ms": 1.43,
+          "max_ms": 28.58,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/warmup-health.txt"
+      },
+      {
+        "phase": "read",
+        "endpoint": "GET /users/:id",
+        "concurrency": 50,
+        "duration_seconds": 30,
+        "requests_sec": 23922.02,
+        "transfer_sec_bytes": 3376414.72,
+        "latency": {
+          "avg_ms": 2.31,
+          "stdev_ms": 2.58,
+          "max_ms": 102.59,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/read-c50.txt"
+      },
+      {
+        "phase": "read",
+        "endpoint": "GET /users/:id",
+        "concurrency": 200,
+        "duration_seconds": 30,
+        "requests_sec": 28477.15,
+        "transfer_sec_bytes": 4016046.08,
+        "latency": {
+          "avg_ms": 7.36,
+          "stdev_ms": 4.63,
+          "max_ms": 146.22,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/read-c200.txt"
+      },
+      {
+        "phase": "read",
+        "endpoint": "GET /users/:id",
+        "concurrency": 500,
+        "duration_seconds": 30,
+        "requests_sec": 28081.85,
+        "transfer_sec_bytes": 3963617.28,
+        "latency": {
+          "avg_ms": 17.81,
+          "stdev_ms": 6.68,
+          "max_ms": 104.96,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/read-c500.txt"
+      },
+      {
+        "phase": "write",
+        "endpoint": "POST /users",
+        "concurrency": 50,
+        "duration_seconds": 20,
+        "requests_sec": 12895.76,
+        "transfer_sec_bytes": 3124756.48,
+        "latency": {
+          "avg_ms": 3.78,
+          "stdev_ms": 1.72,
+          "max_ms": 35.58,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/write-c50.txt"
+      }
+    ]
+  },
+  "k6_tail_latency": {
+    "schema_version": "k6-normalized-1",
+    "target": "go-fiber",
+    "scenario": "tail-latency",
+    "generated_at_utc": "2026-05-26T18:11:37Z",
+    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/k6-tail-summary.json",
+    "checks": {
+      "passes": {
+        "status is 200 or 404": {
+          "passes": 3791413,
+          "fails": 0,
+          "name": "status is 200 or 404",
+          "path": "::status is 200 or 404",
+          "id": "ef1456c8a1788ec4ce69f9b568c28265"
+        }
+      }
+    },
+    "http_req_duration_ms": {
+      "avg": 26.302947467079047,
+      "min": 0.111,
+      "med": 0.673,
+      "max": 545.466,
+      "p90": 128.459,
+      "p95": 170.346,
+      "p99": 228.39975999999993,
+      "p999": 363.0224680000046
+    },
+    "http_req_failed_rate": 0.0,
+    "iteration_rate": 8422.666370038645,
+    "iteration_count": 3791413,
+    "dropped_iterations_rate": 174.5108107975538,
+    "dropped_iterations_count": 78555,
+    "vus": {
+      "current": 2999,
+      "max": 3000
+    },
+    "thresholds": {
+      "http_req_duration": {
+        "p(95)<250": false,
+        "p(99)<500": false,
+        "p(99.9)<1000": false
+      },
+      "http_req_failed": {
+        "rate<0.05": true
+      }
+    },
+    "raw_metrics": {
+      "vus_max": {
+        "value": 3000,
+        "min": 300,
+        "max": 3000
+      },
+      "iteration_duration": {
+        "p(99)": 228.60046508,
+        "p(99.9)": 363.0812693040002,
+        "avg": 26.352975687405642,
+        "min": 0.12575,
+        "med": 0.71975,
+        "max": 545.50275,
+        "p(90)": 128.506958,
+        "p(95)": 170.38795019999998
+      },
+      "http_req_failed": {
+        "passes": 3791413,
+        "fails": 0,
+        "thresholds": {
+          "rate<0.05": true
+        },
+        "value": 1
+      },
+      "vus": {
+        "value": 2999,
+        "min": 0,
+        "max": 3000
+      },
+      "http_req_blocked": {
+        "p(99)": 0.011,
+        "p(99.9)": 0.081,
+        "avg": 0.002254997806980624,
+        "min": 0,
+        "med": 0.001,
+        "max": 17.583,
+        "p(90)": 0.003,
+        "p(95)": 0.004
+      },
+      "http_req_receiving": {
+        "p(99.9)": 0.393,
+        "avg": 0.013730695126036987,
+        "min": 0.002,
+        "med": 0.007,
+        "max": 22.356,
+        "p(90)": 0.02,
+        "p(95)": 0.027,
+        "p(99)": 0.06
+      },
+      "http_req_duration": {
+        "avg": 26.302947467079047,
+        "min": 0.111,
+        "med": 0.673,
+        "max": 545.466,
+        "p(90)": 128.459,
+        "p(95)": 170.346,
+        "p(99)": 228.39975999999993,
+        "p(99.9)": 363.0224680000046,
+        "thresholds": {
+          "p(95)<250": false,
+          "p(99)<500": false,
+          "p(99.9)<1000": false
+        }
+      },
+      "http_reqs": {
+        "count": 3791413,
+        "rate": 8422.666370038645
+      },
+      "iterations": {
+        "rate": 8422.666370038645,
+        "count": 3791413
+      },
+      "http_req_connecting": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0,
+        "avg": 0.00017107843434624519,
+        "min": 0,
+        "med": 0,
+        "max": 7.135,
+        "p(90)": 0
+      },
+      "http_req_sending": {
+        "p(95)": 0.019,
+        "p(99)": 0.118,
+        "p(99.9)": 0.913,
+        "avg": 0.011194151362694867,
+        "min": 0,
+        "med": 0.004,
+        "max": 26.895,
+        "p(90)": 0.011
+      },
+      "data_received": {
+        "count": 534589233,
+        "rate": 1187595.9581754492
+      },
+      "dropped_iterations": {
+        "count": 78555,
+        "rate": 174.5108107975538
+      },
+      "data_sent": {
+        "count": 424638256,
+        "rate": 943338.6334443283
+      },
+      "checks": {
+        "passes": 3791413,
+        "fails": 0,
+        "value": 1
+      },
+      "http_req_waiting": {
+        "min": 0.106,
+        "med": 0.654,
+        "max": 545.446,
+        "p(90)": 128.398,
+        "p(95)": 170.324,
+        "p(99)": 228.355,
+        "p(99.9)": 362.979,
+        "avg": 26.278022620590445
+      },
+      "http_req_tls_handshaking": {
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      }
+    }
+  },
+  "k6_pool_saturation_recovery": {
+    "schema_version": "k6-normalized-1",
+    "target": "go-fiber",
+    "scenario": "pool-saturation-recovery",
+    "generated_at_utc": "2026-05-26T18:17:39Z",
+    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/k6-pool-saturation-summary.json",
+    "checks": {
+      "passes": {
+        "status is 200 or 404": {
+          "path": "::status is 200 or 404",
+          "id": "ef1456c8a1788ec4ce69f9b568c28265",
+          "passes": 8595616,
+          "fails": 0,
+          "name": "status is 200 or 404"
+        }
+      }
+    },
+    "http_req_duration_ms": {
+      "avg": 10.975063003978907,
+      "min": null,
+      "med": 8.581,
+      "max": 108.308,
+      "p90": null,
+      "p95": 28.184,
+      "p99": 33.98,
+      "p999": 46.322770000001896
+    },
+    "http_req_failed_rate": 0.0,
+    "iteration_rate": 23876.337778040688,
+    "iteration_count": 8595616,
+    "dropped_iterations_rate": null,
+    "dropped_iterations_count": null,
+    "vus": {
+      "current": 51,
+      "max": 800
+    },
+    "thresholds": {
+      "http_req_duration": {
+        "p(99)<1500": false
+      },
+      "http_req_failed": {
+        "rate<0.15": true
+      }
+    },
+    "raw_metrics": {
+      "http_req_duration": {
+        "med": 8.581,
+        "max": 108.308,
+        "p(95)": 28.184,
+        "p(99)": 33.98,
+        "p(99.9)": 46.322770000001896,
+        "avg": 10.975063003978907,
+        "thresholds": {
+          "p(99)<1500": false
+        }
+      },
+      "http_req_sending": {
+        "p(99.9)": 0.085,
+        "avg": 0.003602917231625534,
+        "med": 0.002,
+        "max": 16.346,
+        "p(95)": 0.009,
+        "p(99)": 0.019
+      },
+      "vus": {
+        "value": 51,
+        "min": 10,
+        "max": 799
+      },
+      "http_req_tls_handshaking": {
+        "avg": 0,
+        "med": 0,
+        "max": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0
+      },
+      "http_req_receiving": {
+        "avg": 0.011300898155493531,
+        "med": 0.007,
+        "max": 40.863,
+        "p(95)": 0.024,
+        "p(99)": 0.055,
+        "p(99.9)": 0.242
+      },
+      "checks": {
+        "passes": 8595616,
+        "fails": 0,
+        "value": 1
+      },
+      "data_sent": {
+        "count": 962708992,
+        "rate": 2674149.831140557
+      },
+      "http_req_waiting": {
+        "med": 8.567,
+        "max": 108.298,
+        "p(95)": 28.17,
+        "p(99)": 33.948,
+        "p(99.9)": 46.3,
+        "avg": 10.9601591885901
+      },
+      "iteration_duration": {
+        "p(99)": 34.017284849999996,
+        "p(99.9)": 46.367544590000314,
+        "avg": 11.01025865676989,
+        "med": 8.615792,
+        "max": 108.332042,
+        "p(95)": 28.21616625
+      },
+      "http_req_failed": {
+        "passes": 8595616,
+        "fails": 0,
+        "thresholds": {
+          "rate<0.15": true
+        },
+        "value": 1
+      },
+      "http_req_blocked": {
+        "max": 12.422,
+        "p(95)": 0.002,
+        "p(99)": 0.006,
+        "p(99.9)": 0.028,
+        "avg": 0.0010551412488525643,
+        "med": 0.001
+      },
+      "iterations": {
+        "count": 8595616,
+        "rate": 23876.337778040688
+      },
+      "vus_max": {
+        "value": 800,
+        "min": 800,
+        "max": 800
+      },
+      "http_req_connecting": {
+        "avg": 2.038166898102475e-05,
+        "med": 0,
+        "max": 3.514,
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0
+      },
+      "http_reqs": {
+        "count": 8595616,
+        "rate": 23876.337778040688
+      },
+      "data_received": {
+        "count": 1211981856,
+        "rate": 3366563.626703737
+      }
+    }
+  }
+}

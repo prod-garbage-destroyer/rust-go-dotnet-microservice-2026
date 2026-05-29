@@ -1,0 +1,177 @@
+{
+  "schema_version": "k6-normalized-1",
+  "target": "dotnet-aot",
+  "scenario": "tail-latency",
+  "generated_at_utc": "2026-05-26T18:43:32Z",
+  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260526-203341-dotnet-aot/k6-tail-summary.json",
+  "checks": {
+    "passes": {
+      "status is 200 or 404": {
+        "path": "::status is 200 or 404",
+        "id": "ef1456c8a1788ec4ce69f9b568c28265",
+        "passes": 3850064,
+        "fails": 0,
+        "name": "status is 200 or 404"
+      }
+    }
+  },
+  "http_req_duration_ms": {
+    "avg": 14.46373455116586,
+    "min": 0.175,
+    "med": 0.594,
+    "max": 341.678,
+    "p90": 51.721,
+    "p95": 123.62184999999982,
+    "p99": 168.26836999999998,
+    "p999": 193.963
+  },
+  "http_req_failed_rate": 0.0,
+  "iteration_rate": 8554.825318670335,
+  "iteration_count": 3850064,
+  "dropped_iterations_rate": 44.23993265948991,
+  "dropped_iterations_count": 19910,
+  "vus": {
+    "current": 1561,
+    "max": 3000
+  },
+  "thresholds": {
+    "http_req_duration": {
+      "p(95)<250": false,
+      "p(99)<500": false,
+      "p(99.9)<1000": false
+    },
+    "http_req_failed": {
+      "rate<0.05": true
+    }
+  },
+  "raw_metrics": {
+    "data_sent": {
+      "count": 431207168,
+      "rate": 958140.4356910775
+    },
+    "http_req_sending": {
+      "p(99.9)": 0.266,
+      "avg": 0.0051520870823386035,
+      "min": 0,
+      "med": 0.003,
+      "max": 7.904,
+      "p(90)": 0.008,
+      "p(95)": 0.011,
+      "p(99)": 0.04
+    },
+    "iteration_duration": {
+      "p(90)": 51.760112600000035,
+      "p(95)": 123.65482504999994,
+      "p(99)": 168.3015925,
+      "p(99.9)": 193.99494489600008,
+      "avg": 14.493633044517512,
+      "min": 0.190125,
+      "med": 0.626375,
+      "max": 341.699625
+    },
+    "vus_max": {
+      "value": 3000,
+      "min": 300,
+      "max": 3000
+    },
+    "data_received": {
+      "count": 739212288,
+      "rate": 1642526.4611847042
+    },
+    "http_req_duration": {
+      "p(90)": 51.721,
+      "p(95)": 123.62184999999982,
+      "p(99)": 168.26836999999998,
+      "p(99.9)": 193.963,
+      "avg": 14.46373455116586,
+      "min": 0.175,
+      "med": 0.594,
+      "max": 341.678,
+      "thresholds": {
+        "p(95)<250": false,
+        "p(99)<500": false,
+        "p(99.9)<1000": false
+      }
+    },
+    "http_req_waiting": {
+      "min": 0.169,
+      "med": 0.58,
+      "max": 341.669,
+      "p(90)": 51.697,
+      "p(95)": 123.60284999999982,
+      "p(99)": 168.25,
+      "p(99.9)": 193.92587400000085,
+      "avg": 14.449266961796347
+    },
+    "iterations": {
+      "count": 3850064,
+      "rate": 8554.825318670335
+    },
+    "http_req_tls_handshaking": {
+      "p(99.9)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0,
+      "max": 0,
+      "p(90)": 0,
+      "p(95)": 0,
+      "p(99)": 0
+    },
+    "http_reqs": {
+      "rate": 8554.825318670335,
+      "count": 3850064
+    },
+    "checks": {
+      "passes": 3850064,
+      "fails": 0,
+      "value": 1
+    },
+    "dropped_iterations": {
+      "count": 19910,
+      "rate": 44.23993265948991
+    },
+    "http_req_failed": {
+      "passes": 3850064,
+      "fails": 0,
+      "thresholds": {
+        "rate<0.05": true
+      },
+      "value": 1
+    },
+    "vus": {
+      "min": 0,
+      "max": 3000,
+      "value": 1561
+    },
+    "http_req_receiving": {
+      "min": 0.002,
+      "med": 0.006,
+      "max": 19.365,
+      "p(90)": 0.017,
+      "p(95)": 0.021,
+      "p(99)": 0.037,
+      "p(99.9)": 0.19593700000042402,
+      "avg": 0.009315502287904264
+    },
+    "http_req_connecting": {
+      "p(99)": 0,
+      "p(99.9)": 0,
+      "avg": 6.512281354283994e-05,
+      "min": 0,
+      "med": 0,
+      "max": 2.203,
+      "p(90)": 0,
+      "p(95)": 0
+    },
+    "http_req_blocked": {
+      "max": 9.073,
+      "p(90)": 0.002,
+      "p(95)": 0.003,
+      "p(99)": 0.006,
+      "p(99.9)": 0.041,
+      "avg": 0.0014466073811397803,
+      "min": 0,
+      "med": 0.001
+    }
+  }
+}

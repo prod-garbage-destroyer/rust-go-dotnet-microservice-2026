@@ -1,5 +1,19 @@
-implementations/rust-axum/target/
-implementations/go-fiber/microservice
+.DS_Store
+
+# Local build outputs
+core
+**/target/
 **/bin/
 **/obj/
-implementations/dotnet-minimal/microservice/publish/
+**/out/
+**/publish/
+**/.cache/
+
+# Local benchmark process/runtime leftovers
+**/*.pid
+
+# Rendered media and local narration artifacts
+*.mp4
+*.wav
+narration.txt
+shorts-info.md

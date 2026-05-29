@@ -1,0 +1,36 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: /Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/k6/scenarios/pool-saturation-recovery.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 800 max VUs, 6m30s max duration (incl. graceful stop):
+              * pool_saturation_recovery: Up to 800 looping VUs for 6m0s over 6 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (0m01.0s), 010/800 VUs, 35012 complete and 0 interrupted iterations
+pool_saturation_recovery   [   0% ] 010/800 VUs  0m01.0s/6m00.0s
+
+running (0m02.0s), 011/800 VUs, 74163 complete and 0 interrupted iterations
+pool_saturation_recovery   [   1% ] 011/800 VUs  0m02.0s/6m00.0s
+
+running (0m03.0s), 011/800 VUs, 113094 complete and 0 interrupted iterations
+pool_saturation_recovery   [   1% ] 011/800 VUs  0m03.0s/6m00.0s
+
+running (0m04.0s), 012/800 VUs, 152371 complete and 0 interrupted iterations
+pool_saturation_recovery   [   1% ] 012/800 VUs  0m04.0s/6m00.0s
+
+running (0m05.0s), 013/800 VUs, 191993 complete and 0 interrupted iterations
+pool_saturation_recovery   [   1% ] 013/800 VUs  0m05.0s/6m00.0s
+
+running (0m06.0s), 013/800 VUs, 231006 complete and 0 interrupted iterations
+pool_saturation_recovery   [   2% ] 013/800 VUs  0m06.0s/6m00.0s
+
+running (0m07.0s), 014/800 VUs, 272831 complete and 0 interrupted iterations
+pool_saturation_recovery   [   2% ] 014/800 VUs  0m07.0s/6m00.0s

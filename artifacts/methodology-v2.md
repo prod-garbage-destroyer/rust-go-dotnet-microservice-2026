@@ -21,6 +21,7 @@ Rules:
 
 ### wrk closed-loop baseline
 - Warmup: `GET /health`, c=50, 10s
+- Endpoint warmup: discarded warm phase for `GET /users/:id` and `POST /users` using the same Lua scripts as the timed run
 - Read: `GET /users/:id`, c=50/200/500, 30s
 - Write: `POST /users`, c=50, 20s
 
@@ -45,6 +46,7 @@ Rules:
 - Database: same PostgreSQL instance and schema
 - Pool parity: min=5, max=20 in all targets
 - Logging parity: `BENCH_NOTIFY_LOG=false` during timed runs
+- Warmup parity: each timed workload gets a discarded warm phase that exercises the same endpoint and payload shape as the measured run
 - One benchmarked target process active per measured run
 - Same seeded ID list for `/users/:id` workloads
 

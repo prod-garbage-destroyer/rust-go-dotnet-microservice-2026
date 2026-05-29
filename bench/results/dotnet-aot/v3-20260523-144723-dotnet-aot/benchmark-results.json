@@ -1,0 +1,103 @@
+{
+  "schema_version": "v2-baseline-1",
+  "target": "dotnet-aot",
+  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot",
+  "generated_at_utc": "2026-05-23T12:49:44Z",
+  "measurements": [
+    {
+      "phase": "warmup",
+      "endpoint": "GET /health",
+      "concurrency": 50,
+      "duration_seconds": 10,
+      "requests_sec": 36058.94,
+      "transfer_sec_bytes": 6239027.2,
+      "latency": {
+        "avg_ms": 1.34,
+        "stdev_ms": 0.58357,
+        "max_ms": 9.19,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/warmup-health.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 50,
+      "duration_seconds": 30,
+      "requests_sec": 19646.39,
+      "transfer_sec_bytes": 3774873.6,
+      "latency": {
+        "avg_ms": 2.46,
+        "stdev_ms": 0.94,
+        "max_ms": 28.57,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/read-c50.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 200,
+      "duration_seconds": 30,
+      "requests_sec": 19003.0,
+      "transfer_sec_bytes": 3649044.48,
+      "latency": {
+        "avg_ms": 10.53,
+        "stdev_ms": 1.85,
+        "max_ms": 53.93,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/read-c200.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 500,
+      "duration_seconds": 30,
+      "requests_sec": 18590.85,
+      "transfer_sec_bytes": 3565158.4,
+      "latency": {
+        "avg_ms": 26.65,
+        "stdev_ms": 3.91,
+        "max_ms": 109.03,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/read-c500.txt"
+    },
+    {
+      "phase": "write",
+      "endpoint": "POST /users",
+      "concurrency": 50,
+      "duration_seconds": 20,
+      "requests_sec": 7241.82,
+      "transfer_sec_bytes": 1583349.76,
+      "latency": {
+        "avg_ms": 6.93,
+        "stdev_ms": 4.26,
+        "max_ms": 63.26,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/write-c50.txt"
+    }
+  ]
+}

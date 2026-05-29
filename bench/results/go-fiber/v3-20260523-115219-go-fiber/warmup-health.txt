@@ -1,0 +1,8 @@
+Running 10s test @ http://localhost:3002/health
+  4 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.16ms  533.50us   6.02ms   71.34%
+    Req/Sec    10.45k   647.07    12.41k    75.99%
+  420063 requests in 10.10s, 49.27MB read
+Requests/sec:  41574.41
+Transfer/sec:      4.88MB

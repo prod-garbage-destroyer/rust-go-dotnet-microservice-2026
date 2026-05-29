@@ -1,0 +1,103 @@
+{
+  "schema_version": "v2-baseline-1",
+  "target": "rust-axum",
+  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-194537-rust-axum",
+  "generated_at_utc": "2026-05-26T17:47:58Z",
+  "measurements": [
+    {
+      "phase": "warmup",
+      "endpoint": "GET /health",
+      "concurrency": 50,
+      "duration_seconds": 10,
+      "requests_sec": 45101.78,
+      "transfer_sec_bytes": 5546967.04,
+      "latency": {
+        "avg_ms": 1.07,
+        "stdev_ms": 0.49595,
+        "max_ms": 5.08,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-194537-rust-axum/warmup-health.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 50,
+      "duration_seconds": 30,
+      "requests_sec": 26925.57,
+      "transfer_sec_bytes": 3795845.12,
+      "latency": {
+        "avg_ms": 1.8,
+        "stdev_ms": 0.75521,
+        "max_ms": 24.52,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-194537-rust-axum/read-c50.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 200,
+      "duration_seconds": 30,
+      "requests_sec": 30103.82,
+      "transfer_sec_bytes": 4246732.8,
+      "latency": {
+        "avg_ms": 6.65,
+        "stdev_ms": 1.6,
+        "max_ms": 41.35,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-194537-rust-axum/read-c200.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 500,
+      "duration_seconds": 30,
+      "requests_sec": 29585.47,
+      "transfer_sec_bytes": 4173332.48,
+      "latency": {
+        "avg_ms": 16.73,
+        "stdev_ms": 3.08,
+        "max_ms": 39.55,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-194537-rust-axum/read-c500.txt"
+    },
+    {
+      "phase": "write",
+      "endpoint": "POST /users",
+      "concurrency": 50,
+      "duration_seconds": 20,
+      "requests_sec": 20137.44,
+      "transfer_sec_bytes": 4949278.72,
+      "latency": {
+        "avg_ms": 2.4,
+        "stdev_ms": 0.81162,
+        "max_ms": 26.65,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/rust-axum/v3-20260526-194537-rust-axum/write-c50.txt"
+    }
+  ]
+}

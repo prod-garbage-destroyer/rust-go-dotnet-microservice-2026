@@ -1,0 +1,8 @@
+Running 10s test @ http://host.containers.internal:3001/health
+  4 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.49ms  569.35us   6.93ms   71.96%
+    Req/Sec     7.57k     1.66k   12.13k    85.86%
+  303478 requests in 10.10s, 35.60MB read
+Requests/sec:  30048.37
+Transfer/sec:      3.52MB

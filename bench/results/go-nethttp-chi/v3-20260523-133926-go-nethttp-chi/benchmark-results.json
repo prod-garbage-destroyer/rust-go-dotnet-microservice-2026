@@ -1,0 +1,103 @@
+{
+  "schema_version": "v2-baseline-1",
+  "target": "go-nethttp-chi",
+  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi",
+  "generated_at_utc": "2026-05-23T11:41:47Z",
+  "measurements": [
+    {
+      "phase": "warmup",
+      "endpoint": "GET /health",
+      "concurrency": 50,
+      "duration_seconds": 10,
+      "requests_sec": 42223.4,
+      "transfer_sec_bytes": 5232394.24,
+      "latency": {
+        "avg_ms": 1.15,
+        "stdev_ms": 0.54495,
+        "max_ms": 6.11,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/warmup-health.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 50,
+      "duration_seconds": 30,
+      "requests_sec": 33706.74,
+      "transfer_sec_bytes": 4781506.56,
+      "latency": {
+        "avg_ms": 1.48,
+        "stdev_ms": 0.87,
+        "max_ms": 68.17,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/read-c50.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 200,
+      "duration_seconds": 30,
+      "requests_sec": 33167.81,
+      "transfer_sec_bytes": 4708106.24,
+      "latency": {
+        "avg_ms": 6.02,
+        "stdev_ms": 1.67,
+        "max_ms": 34.38,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/read-c200.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 500,
+      "duration_seconds": 30,
+      "requests_sec": 34219.79,
+      "transfer_sec_bytes": 4854906.88,
+      "latency": {
+        "avg_ms": 7.07,
+        "stdev_ms": 1.72,
+        "max_ms": 38.42,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/read-c500.txt"
+    },
+    {
+      "phase": "write",
+      "endpoint": "POST /users",
+      "concurrency": 50,
+      "duration_seconds": 20,
+      "requests_sec": 18498.62,
+      "transfer_sec_bytes": 4498391.04,
+      "latency": {
+        "avg_ms": 2.63,
+        "stdev_ms": 1.06,
+        "max_ms": 27.76,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-nethttp-chi/v3-20260523-133926-go-nethttp-chi/write-c50.txt"
+    }
+  ]
+}

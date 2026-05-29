@@ -1,0 +1,103 @@
+{
+  "schema_version": "v2-baseline-1",
+  "target": "go-fiber",
+  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451",
+  "generated_at_utc": "2026-05-09T07:22:47Z",
+  "measurements": [
+    {
+      "phase": "warmup",
+      "endpoint": "GET /health",
+      "concurrency": 50,
+      "duration_seconds": 10,
+      "requests_sec": 23990.22,
+      "transfer_sec_bytes": 2946498.56,
+      "latency": {
+        "avg_ms": 1.75,
+        "stdev_ms": 0.66757,
+        "max_ms": 8.56,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451/warmup-health.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 50,
+      "duration_seconds": 30,
+      "requests_sec": 11205.6,
+      "transfer_sec_bytes": 1583349.76,
+      "latency": {
+        "avg_ms": 4.49,
+        "stdev_ms": 3.21,
+        "max_ms": 112.75,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451/read-c50.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 200,
+      "duration_seconds": 30,
+      "requests_sec": 12327.61,
+      "transfer_sec_bytes": 1740636.16,
+      "latency": {
+        "avg_ms": 14.96,
+        "stdev_ms": 3.19,
+        "max_ms": 66.16,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451/read-c200.txt"
+    },
+    {
+      "phase": "read",
+      "endpoint": "GET /users/:id",
+      "concurrency": 500,
+      "duration_seconds": 30,
+      "requests_sec": 12237.65,
+      "transfer_sec_bytes": 1730150.4,
+      "latency": {
+        "avg_ms": 23.61,
+        "stdev_ms": 6.26,
+        "max_ms": 100.63,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451/read-c500.txt"
+    },
+    {
+      "phase": "write",
+      "endpoint": "POST /users",
+      "concurrency": 50,
+      "duration_seconds": 20,
+      "requests_sec": 4510.48,
+      "transfer_sec_bytes": 1090519.04,
+      "latency": {
+        "avg_ms": 10.68,
+        "stdev_ms": 4.41,
+        "max_ms": 106.22,
+        "p50_ms": null,
+        "p75_ms": null,
+        "p90_ms": null,
+        "p99_ms": null
+      },
+      "non_2xx_3xx_responses": 0,
+      "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/20260509-090451/write-c50.txt"
+    }
+  ]
+}

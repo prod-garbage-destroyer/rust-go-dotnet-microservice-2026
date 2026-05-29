@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
 using Npgsql;
+using NpgsqlTypes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,9 +67,15 @@ app.MapPost("/json/roundtrip", (JsonRoundtripPayload payload) =>
         return Results.UnprocessableEntity(new ErrorResponse("items must contain at least 1 entry"));
     }
 
-    var enabledCount = payload.Items.Count(item => item.Enabled);
-    var scoreSum = payload.Items.Sum(item => item.Score);
-    var tagCount = payload.Items.Sum(item => item.Tags?.Count ?? 0);
+    var enabledCount = 0;
+    long scoreSum = 0;
+    var tagCount = 0;
+    foreach (var item in payload.Items)
+    {
+        if (item.Enabled) enabledCount++;
+        scoreSum += item.Score;
+        if (item.Tags is not null) tagCount += item.Tags.Count;
+    }
 
     return Results.Ok(new JsonRoundtripResponse(
         payload.Tenant,
@@ -97,25 +103,24 @@ app.MapPost("/crypto/hash", (CryptoHashPayload payload) =>
         bytes = SHA256.HashData(bytes);
     }
 
-    var digestHex = Convert.ToHexString(bytes).ToLowerInvariant();
+    var digestHex = Convert.ToHexStringLower(bytes);
     return Results.Ok(new CryptoHashResponse("sha256", rounds, digestHex));
 });
 
 app.MapPost("/users", async (CreateUserRequest req, NpgsqlDataSource ds) =>
 {
-    var errors = new List<ValidationResult>();
-    var ctx = new ValidationContext(req);
-    if (!Validator.TryValidateObject(req, ctx, errors, true))
+    var validationError = ValidateCreateUserRequest(req);
+    if (validationError is not null)
     {
-        return Results.UnprocessableEntity(new ErrorResponse(string.Join("; ", errors.Select(e => e.ErrorMessage))));
+        return Results.UnprocessableEntity(new ErrorResponse(validationError));
     }
 
     await using var conn = await ds.OpenConnectionAsync();
     await using var cmd = new NpgsqlCommand(
         "INSERT INTO users (name, email) VALUES (@name, @email) RETURNING id, name, email, created_at",
         conn);
-    cmd.Parameters.AddWithValue("name", req.Name);
-    cmd.Parameters.AddWithValue("email", req.Email);
+    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlDbType.Varchar) { Value = req.Name });
+    cmd.Parameters.Add(new NpgsqlParameter("email", NpgsqlDbType.Varchar) { Value = req.Email });
 
     await using var reader = await cmd.ExecuteReaderAsync();
     if (!await reader.ReadAsync())
@@ -129,13 +134,13 @@ app.MapPost("/users", async (CreateUserRequest req, NpgsqlDataSource ds) =>
     );
 
     // Non-blocking background job
-    _ = Task.Run(() =>
+    if (notifyLogEnabled)
     {
-        if (notifyLogEnabled)
+        _ = Task.Run(() =>
         {
             Console.WriteLine($"NOTIFY: email sent to {user.Email} at {DateTime.UtcNow:O}");
-        }
-    });
+        });
+    }
 
     return Results.Created($"/users/{user.Id}", user);
 });
@@ -145,7 +150,7 @@ app.MapGet("/users/{id:guid}", async (Guid id, NpgsqlDataSource ds) =>
     await using var conn = await ds.OpenConnectionAsync();
     await using var cmd = new NpgsqlCommand(
         "SELECT id, name, email, created_at FROM users WHERE id = @id", conn);
-    cmd.Parameters.AddWithValue("id", id);
+    cmd.Parameters.Add(new NpgsqlParameter("id", NpgsqlDbType.Uuid) { Value = id });
 
     await using var reader = await cmd.ExecuteReaderAsync();
     if (!await reader.ReadAsync())
@@ -183,7 +188,7 @@ app.MapDelete("/users/{id:guid}", async (Guid id, NpgsqlDataSource ds) =>
 {
     await using var conn = await ds.OpenConnectionAsync();
     await using var cmd = new NpgsqlCommand("DELETE FROM users WHERE id = @id", conn);
-    cmd.Parameters.AddWithValue("id", id);
+    cmd.Parameters.Add(new NpgsqlParameter("id", NpgsqlDbType.Uuid) { Value = id });
 
     var rows = await cmd.ExecuteNonQueryAsync();
     return rows == 0
@@ -193,9 +198,34 @@ app.MapDelete("/users/{id:guid}", async (Guid id, NpgsqlDataSource ds) =>
 
 await app.RunAsync();
 
+static string? ValidateCreateUserRequest(CreateUserRequest req)
+{
+    if (string.IsNullOrWhiteSpace(req.Name))
+    {
+        return "name is required";
+    }
+
+    if (req.Name.Length > 100)
+    {
+        return "name length must be <= 100";
+    }
+
+    if (string.IsNullOrWhiteSpace(req.Email))
+    {
+        return "email is required";
+    }
+
+    if (!req.Email.Contains('@') || req.Email.StartsWith('@') || req.Email.EndsWith('@'))
+    {
+        return "email format is invalid";
+    }
+
+    return null;
+}
+
 record CreateUserRequest(
-    [property: Required, StringLength(100, MinimumLength = 1)] string Name,
-    [property: Required, EmailAddress] string Email
+    string Name,
+    string Email
 );
 
 record UserDto(

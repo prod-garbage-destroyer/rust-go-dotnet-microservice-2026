@@ -1,0 +1,134 @@
+services:
+  postgres:
+    image: docker.io/postgres:16-alpine
+    container_name: bench-postgres
+    environment:
+      POSTGRES_USER: bench
+      POSTGRES_PASSWORD: bench
+      POSTGRES_DB: bench
+    ports:
+      - "5433:5432"
+    networks:
+      - bench-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bench -d bench"]
+      interval: 2s
+      timeout: 3s
+      retries: 10
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  rust-axum:
+    build:
+      context: ../..
+      dockerfile: bench/podman/services/rust-axum.Containerfile
+      platform: linux/arm64
+    image: bench/rust-axum:latest
+    container_name: bench-rust-axum
+    environment:
+      DATABASE_URL: "postgres://bench:bench@bench-postgres:5432/bench"
+      PORT: "3001"
+      BENCH_NOTIFY_LOG: "false"
+    ports:
+      - "3001:3001"
+    networks:
+      - bench-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - rust-axum
+
+  go-fiber:
+    build:
+      context: ../..
+      dockerfile: bench/podman/services/go-fiber.Containerfile
+      platform: linux/arm64
+    image: bench/go-fiber:latest
+    container_name: bench-go-fiber
+    environment:
+      DATABASE_URL: "postgres://bench:bench@bench-postgres:5432/bench"
+      PORT: "3002"
+      BENCH_NOTIFY_LOG: "false"
+    ports:
+      - "3002:3002"
+    networks:
+      - bench-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - go-fiber
+
+  go-nethttp-chi:
+    build:
+      context: ../..
+      dockerfile: bench/podman/services/go-nethttp-chi.Containerfile
+      platform: linux/arm64
+    image: bench/go-nethttp-chi:latest
+    container_name: bench-go-nethttp-chi
+    environment:
+      DATABASE_URL: "postgres://bench:bench@bench-postgres:5432/bench"
+      PORT: "3005"
+      BENCH_NOTIFY_LOG: "false"
+    ports:
+      - "3005:3005"
+    networks:
+      - bench-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - go-nethttp-chi
+
+  dotnet-jit:
+    build:
+      context: ../..
+      dockerfile: bench/podman/services/dotnet-jit.Containerfile
+      platform: linux/arm64
+    image: bench/dotnet-jit:latest
+    container_name: bench-dotnet-jit
+    environment:
+      DATABASE_URL: "Host=bench-postgres;Port=5432;Database=bench;Username=bench;Password=bench"
+      PORT: "3003"
+      BENCH_NOTIFY_LOG: "false"
+      DOTNET_EnableHWIntrinsic: "0"
+      DOTNET_EnableARM64JittedIntrinsics: "0"
+      DOTNET_TieredCompilation: "0"
+      DOTNET_TC_QuickJitForLoops: "1"
+      DOTNET_GCName: "libclrgc.so"
+      Npgsql__EnableHardwareIntrinsics: "false"
+    ports:
+      - "3003:3003"
+    networks:
+      - bench-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - dotnet-jit
+
+  dotnet-aot:
+    build:
+      context: ../..
+      dockerfile: bench/podman/services/dotnet-aot.Containerfile
+      platform: linux/arm64
+    image: bench/dotnet-aot:latest
+    container_name: bench-dotnet-aot
+    environment:
+      DATABASE_URL: "Host=bench-postgres;Port=5432;Database=bench;Username=bench;Password=bench"
+      PORT: "3004"
+      BENCH_NOTIFY_LOG: "false"
+    ports:
+      - "3004:3004"
+    networks:
+      - bench-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - dotnet-aot
+
+networks:
+  bench-net:
+    driver: bridge

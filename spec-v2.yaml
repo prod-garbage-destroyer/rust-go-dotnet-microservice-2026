@@ -1,0 +1,181 @@
+experiment:
+  slug: rust-go-dotnet-microservice-2026-v2
+  topic: "Rust (Axum) vs Go (Fiber) vs ASP.NET (.NET 10 JIT + Native AOT) — Microservice Benchmark v2"
+  experiment_type: combined
+  primary_metric: p99_latency_ms
+  secondary_metrics:
+    - requests_per_second
+    - memory_rss_mb
+    - startup_time_ms
+    - first_request_latency_ms
+    - cpu_cycles_per_request
+  targets:
+    - name: rust-axum
+      language: Rust
+      framework: Axum 0.8
+      toolchain: rustc 1.93.1
+      runtime_mode: native
+    - name: go-fiber
+      language: Go
+      framework: Fiber v2
+      toolchain: go1.26.2
+      runtime_mode: native
+    - name: dotnet-jit
+      language: C#
+      framework: ASP.NET Minimal API (.NET 10)
+      toolchain: dotnet 10.0.x
+      runtime_mode: jit
+    - name: dotnet-aot
+      language: C#
+      framework: ASP.NET Minimal API (.NET 10)
+      toolchain: dotnet 10.0.x
+      runtime_mode: native_aot
+
+environment:
+  os: linux
+  architecture: x86_64
+  container_runtime: podman
+  db:
+    engine: PostgreSQL 16
+    host_port: 5433
+  benchmark_tools:
+    closed_loop:
+      name: wrk
+      version: 4.2.0
+    open_loop:
+      name: k6
+      version: 0.53.x
+  perf_tools:
+    - perf
+    - pidstat
+
+fairness:
+  connection_pool:
+    min_connections: 5
+    max_connections: 20
+    all_targets: true
+  logging:
+    request_logging_enabled: false
+    startup_logging_only: true
+  middleware:
+    response_compression: disabled
+    tracing_exporters: disabled
+  container_base_images:
+    rust-axum:
+      image: debian-bookworm-slim
+      libc: glibc
+    go-fiber:
+      image: debian-bookworm-slim
+      libc: glibc
+    dotnet-jit:
+      image: mcr.microsoft.com/dotnet/aspnet:10.0
+      libc: glibc
+    dotnet-aot:
+      image: mcr.microsoft.com/dotnet/runtime-deps:10.0
+      libc: glibc
+
+workloads:
+  - name: io_read_heavy
+    endpoint_mix:
+      - method: GET
+        path: /users/:id
+        weight_pct: 70
+      - method: POST
+        path: /users
+        weight_pct: 30
+  - name: json_hot_path
+    endpoint_mix:
+      - method: POST
+        path: /json/roundtrip
+        weight_pct: 100
+    payload_profile:
+      object_count: 50
+      nested_depth: 3
+      approx_payload_bytes: 8192
+  - name: cpu_bound
+    endpoint_mix:
+      - method: POST
+        path: /crypto/hash
+        weight_pct: 100
+    operation:
+      algorithm: argon2id
+      cost_profile: medium
+
+benchmarks:
+  warmup:
+    duration_seconds: 20
+    concurrency: 50
+    endpoint: GET /health
+  cold_vs_warm:
+    reset_between_targets: true
+    measurements:
+      - startup_time_ms
+      - first_request_latency_ms
+      - request_1000_latency_ms
+      - idle_memory_rss_mb
+      - warmed_memory_rss_mb
+  latency_tail:
+    method: open_loop
+    duration_seconds: 90
+    stages_rps:
+      - 2000
+      - 5000
+      - 10000
+      - 15000
+      - 20000
+    metrics:
+      - p50_latency_ms
+      - p95_latency_ms
+      - p99_latency_ms
+      - p999_latency_ms
+      - error_rate_pct
+      - dropped_iterations_pct
+  pool_saturation_recovery:
+    method: closed_loop
+    saturation_concurrency_levels:
+      - 50
+      - 100
+      - 200
+      - 400
+      - 800
+    sustain_seconds: 60
+    recovery_profile:
+      drop_to_concurrency: 50
+      observe_seconds: 60
+    metrics:
+      - rps
+      - p99_latency_ms
+      - error_rate_pct
+      - time_to_recover_p99_ms_under_100
+  cpu_efficiency:
+    method: closed_loop
+    endpoint: GET /users/:id
+    duration_seconds: 45
+    concurrency: 200
+    perf_stat_events:
+      - cycles
+      - instructions
+      - branches
+      - branch-misses
+      - cache-misses
+    derived_metrics:
+      - cpu_cycles_per_request
+      - instructions_per_request
+      - ipc
+
+runs:
+  measurement_runs: 7
+  retry_policy:
+    infra_failures_only: true
+    max_retries: 1
+
+artifacts:
+  required:
+    - artifacts/benchmark-results-v2.json
+    - artifacts/tail-latency.json
+    - artifacts/cpu-efficiency.json
+    - artifacts/pool-saturation-recovery.json
+    - artifacts/startup-cold-warm.json
+    - artifacts/charts-data-v2.json
+    - artifacts/summary-v2.md
+    - artifacts/methodology-v2.md

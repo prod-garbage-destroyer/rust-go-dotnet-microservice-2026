@@ -1,0 +1,444 @@
+{
+  "schema_version": "benchmark-results-v2-1",
+  "target": "dotnet-aot",
+  "generated_at_utc": "2026-05-23T13:08:32Z",
+  "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot",
+  "inputs": {
+    "wrk": "benchmark-results.json",
+    "k6_tail": "k6-tail-normalized.json",
+    "k6_pool_saturation_recovery": "k6-pool-saturation-normalized.json"
+  },
+  "wrk_baseline": {
+    "schema_version": "v2-baseline-1",
+    "target": "dotnet-aot",
+    "run_dir": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot",
+    "generated_at_utc": "2026-05-23T12:49:44Z",
+    "measurements": [
+      {
+        "phase": "warmup",
+        "endpoint": "GET /health",
+        "concurrency": 50,
+        "duration_seconds": 10,
+        "requests_sec": 36058.94,
+        "transfer_sec_bytes": 6239027.2,
+        "latency": {
+          "avg_ms": 1.34,
+          "stdev_ms": 0.58357,
+          "max_ms": 9.19,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/warmup-health.txt"
+      },
+      {
+        "phase": "read",
+        "endpoint": "GET /users/:id",
+        "concurrency": 50,
+        "duration_seconds": 30,
+        "requests_sec": 19646.39,
+        "transfer_sec_bytes": 3774873.6,
+        "latency": {
+          "avg_ms": 2.46,
+          "stdev_ms": 0.94,
+          "max_ms": 28.57,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/read-c50.txt"
+      },
+      {
+        "phase": "read",
+        "endpoint": "GET /users/:id",
+        "concurrency": 200,
+        "duration_seconds": 30,
+        "requests_sec": 19003.0,
+        "transfer_sec_bytes": 3649044.48,
+        "latency": {
+          "avg_ms": 10.53,
+          "stdev_ms": 1.85,
+          "max_ms": 53.93,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/read-c200.txt"
+      },
+      {
+        "phase": "read",
+        "endpoint": "GET /users/:id",
+        "concurrency": 500,
+        "duration_seconds": 30,
+        "requests_sec": 18590.85,
+        "transfer_sec_bytes": 3565158.4,
+        "latency": {
+          "avg_ms": 26.65,
+          "stdev_ms": 3.91,
+          "max_ms": 109.03,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/read-c500.txt"
+      },
+      {
+        "phase": "write",
+        "endpoint": "POST /users",
+        "concurrency": 50,
+        "duration_seconds": 20,
+        "requests_sec": 7241.82,
+        "transfer_sec_bytes": 1583349.76,
+        "latency": {
+          "avg_ms": 6.93,
+          "stdev_ms": 4.26,
+          "max_ms": 63.26,
+          "p50_ms": null,
+          "p75_ms": null,
+          "p90_ms": null,
+          "p99_ms": null
+        },
+        "non_2xx_3xx_responses": 0,
+        "raw_output_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/write-c50.txt"
+      }
+    ]
+  },
+  "k6_tail_latency": {
+    "schema_version": "k6-normalized-1",
+    "target": "dotnet-aot",
+    "scenario": "tail-latency",
+    "generated_at_utc": "2026-05-23T13:02:31Z",
+    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/k6-tail-summary.json",
+    "checks": {
+      "passes": {
+        "status is 200 or 404": {
+          "name": "status is 200 or 404",
+          "path": "::status is 200 or 404",
+          "id": "ef1456c8a1788ec4ce69f9b568c28265",
+          "passes": 3559712,
+          "fails": 0
+        }
+      }
+    },
+    "http_req_duration_ms": {
+      "avg": 62.47100233614444,
+      "min": 0.171,
+      "med": 0.762,
+      "max": 295856.833,
+      "p90": 218.681,
+      "p95": 244.324,
+      "p99": 298.183,
+      "p999": 357.54831200000314
+    },
+    "http_req_failed_rate": 0.0,
+    "iteration_rate": 4644.616070978169,
+    "iteration_count": 3559712,
+    "dropped_iterations_rate": 404.8162584359478,
+    "dropped_iterations_count": 310258,
+    "vus": {
+      "current": 3000,
+      "max": 3000
+    },
+    "thresholds": {
+      "http_req_duration": {
+        "p(99)<500": false,
+        "p(99.9)<1000": false,
+        "p(95)<250": false
+      },
+      "http_req_failed": {
+        "rate<0.05": true
+      }
+    },
+    "raw_metrics": {
+      "http_reqs": {
+        "count": 3559712,
+        "rate": 4644.616070978169
+      },
+      "data_received": {
+        "rate": 891766.2856278084,
+        "count": 683464704
+      },
+      "http_req_blocked": {
+        "max": 125.14,
+        "p(90)": 0.003,
+        "p(95)": 0.004,
+        "p(99)": 0.01,
+        "p(99.9)": 0.062,
+        "avg": 0.00286979143270454,
+        "min": 0,
+        "med": 0.001
+      },
+      "http_req_sending": {
+        "p(99)": 0.078,
+        "p(99.9)": 0.462,
+        "avg": 0.007786053759630662,
+        "min": 0.001,
+        "med": 0.004,
+        "max": 64.527,
+        "p(90)": 0.01,
+        "p(95)": 0.016
+      },
+      "http_req_waiting": {
+        "p(99)": 298.15689,
+        "p(99.9)": 357.5083120000031,
+        "avg": 62.45078528796715,
+        "min": 0.164,
+        "med": 0.743,
+        "max": 295856.821,
+        "p(90)": 218.651,
+        "p(95)": 244.295
+      },
+      "http_req_receiving": {
+        "max": 65.29,
+        "p(90)": 0.021,
+        "p(95)": 0.029,
+        "p(99)": 0.057,
+        "p(99.9)": 0.299,
+        "avg": 0.01243099441760358,
+        "min": 0.002,
+        "med": 0.008
+      },
+      "http_req_connecting": {
+        "avg": 0.0010471164521174722,
+        "min": 0,
+        "med": 0,
+        "max": 125.056,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0
+      },
+      "checks": {
+        "passes": 3559712,
+        "fails": 0,
+        "value": 1
+      },
+      "http_req_failed": {
+        "passes": 3559712,
+        "fails": 0,
+        "thresholds": {
+          "rate<0.05": true
+        },
+        "value": 1
+      },
+      "http_req_duration": {
+        "med": 0.762,
+        "max": 295856.833,
+        "p(90)": 218.681,
+        "p(95)": 244.324,
+        "p(99)": 298.183,
+        "p(99.9)": 357.54831200000314,
+        "avg": 62.47100233614444,
+        "min": 0.171,
+        "thresholds": {
+          "p(99)<500": false,
+          "p(99.9)<1000": false,
+          "p(95)<250": false
+        }
+      },
+      "iterations": {
+        "count": 3559712,
+        "rate": 4644.616070978169
+      },
+      "iteration_duration": {
+        "p(95)": 244.37686249999996,
+        "p(99)": 298.26847250000003,
+        "p(99.9)": 357.70562897400043,
+        "avg": 62.13836393246291,
+        "min": 0.189625,
+        "med": 0.805167,
+        "max": 1350.678541,
+        "p(90)": 218.7249875
+      },
+      "http_req_tls_handshaking": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0
+      },
+      "vus": {
+        "value": 3000,
+        "min": 0,
+        "max": 3000
+      },
+      "dropped_iterations": {
+        "count": 310258,
+        "rate": 404.8162584359478
+      },
+      "data_sent": {
+        "rate": 520196.9999495549,
+        "count": 398687744
+      },
+      "vus_max": {
+        "value": 3000,
+        "min": 300,
+        "max": 3000
+      }
+    }
+  },
+  "k6_pool_saturation_recovery": {
+    "schema_version": "k6-normalized-1",
+    "target": "dotnet-aot",
+    "scenario": "pool-saturation-recovery",
+    "generated_at_utc": "2026-05-23T13:08:32Z",
+    "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/dotnet-aot/v3-20260523-144723-dotnet-aot/k6-pool-saturation-summary.json",
+    "checks": {
+      "passes": {
+        "status is 200 or 404": {
+          "name": "status is 200 or 404",
+          "path": "::status is 200 or 404",
+          "id": "ef1456c8a1788ec4ce69f9b568c28265",
+          "passes": 6482300,
+          "fails": 0
+        }
+      }
+    },
+    "http_req_duration_ms": {
+      "avg": 14.567089041235798,
+      "min": null,
+      "med": 9.776,
+      "max": 236.74,
+      "p90": null,
+      "p95": 41.004,
+      "p99": 49.467,
+      "p999": 63.307
+    },
+    "http_req_failed_rate": 0.0,
+    "iteration_rate": 18006.160110621262,
+    "iteration_count": 6482300,
+    "dropped_iterations_rate": null,
+    "dropped_iterations_count": null,
+    "vus": {
+      "current": 51,
+      "max": 800
+    },
+    "thresholds": {
+      "http_req_duration": {
+        "p(99)<1500": false
+      },
+      "http_req_failed": {
+        "rate<0.15": true
+      }
+    },
+    "raw_metrics": {
+      "iteration_duration": {
+        "p(99.9)": 63.36499581700279,
+        "avg": 14.60220562971598,
+        "med": 9.811917,
+        "max": 236.764458,
+        "p(95)": 41.040791,
+        "p(99)": 49.506041
+      },
+      "vus_max": {
+        "value": 800,
+        "min": 800,
+        "max": 800
+      },
+      "iterations": {
+        "count": 6482300,
+        "rate": 18006.160110621262
+      },
+      "http_req_duration": {
+        "avg": 14.567089041235798,
+        "med": 9.776,
+        "max": 236.74,
+        "p(95)": 41.004,
+        "p(99)": 49.467,
+        "p(99.9)": 63.307,
+        "thresholds": {
+          "p(99)<1500": false
+        }
+      },
+      "http_reqs": {
+        "count": 6482300,
+        "rate": 18006.160110621262
+      },
+      "http_req_blocked": {
+        "avg": 0.001111840087713391,
+        "med": 0.001,
+        "max": 19.823,
+        "p(95)": 0.002,
+        "p(99)": 0.006,
+        "p(99.9)": 0.026
+      },
+      "data_sent": {
+        "count": 726017600,
+        "rate": 2016689.9323895813
+      },
+      "http_req_failed": {
+        "passes": 6482300,
+        "fails": 0,
+        "thresholds": {
+          "rate<0.15": true
+        },
+        "value": 1
+      },
+      "http_req_receiving": {
+        "max": 20.892,
+        "p(95)": 0.026,
+        "p(99)": 0.058,
+        "p(99.9)": 0.286,
+        "avg": 0.012754609320685041,
+        "med": 0.008
+      },
+      "checks": {
+        "passes": 6482300,
+        "fails": 0,
+        "value": 1
+      },
+      "http_req_waiting": {
+        "avg": 14.550732525336905,
+        "med": 9.76,
+        "max": 236.73,
+        "p(95)": 40.986,
+        "p(99)": 49.448,
+        "p(99.9)": 63.21680400000286
+      },
+      "http_req_sending": {
+        "avg": 0.0036019065766427017,
+        "med": 0.002,
+        "max": 19.258,
+        "p(95)": 0.008,
+        "p(99)": 0.017,
+        "p(99.9)": 0.069
+      },
+      "vus": {
+        "value": 51,
+        "min": 10,
+        "max": 799
+      },
+      "http_req_tls_handshaking": {
+        "med": 0,
+        "max": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "p(99.9)": 0,
+        "avg": 0
+      },
+      "http_req_connecting": {
+        "p(99.9)": 0,
+        "avg": 2.3100751276553083e-05,
+        "med": 0,
+        "max": 3.134,
+        "p(95)": 0,
+        "p(99)": 0
+      },
+      "data_received": {
+        "count": 1244601600,
+        "rate": 3457182.7412392823
+      }
+    }
+  }
+}

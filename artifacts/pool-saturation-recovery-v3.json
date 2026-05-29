@@ -1,0 +1,44 @@
+{
+  "schema_version": "pool-saturation-recovery-v3-1",
+  "experiment_slug": "rust-go-dotnet-microservice-2026-v3",
+  "generated_at_utc": "2026-05-27T13:20:03Z",
+  "scenario": "k6 pool saturation recovery",
+  "rows": [
+    {
+      "target": "rust-axum",
+      "pool_p95_ms": 51.729,
+      "pool_p99_ms": 81.92101999999996,
+      "pool_p999_ms": 232.913,
+      "pool_failed_rate": 0,
+      "pool_dropped_iterations_rate": null,
+      "rank_p99": 3
+    },
+    {
+      "target": "go-fiber",
+      "pool_p95_ms": 42.606,
+      "pool_p99_ms": 60.25971999999995,
+      "pool_p999_ms": 130.17928800000246,
+      "pool_failed_rate": 0,
+      "pool_dropped_iterations_rate": null,
+      "rank_p99": 1
+    },
+    {
+      "target": "go-nethttp-chi",
+      "pool_p95_ms": 56.582,
+      "pool_p99_ms": 156.148,
+      "pool_p999_ms": 291.45305500000296,
+      "pool_failed_rate": 0,
+      "pool_dropped_iterations_rate": null,
+      "rank_p99": 4
+    },
+    {
+      "target": "dotnet-aot",
+      "pool_p95_ms": 54.684,
+      "pool_p99_ms": 67.998,
+      "pool_p999_ms": 89.82699600000265,
+      "pool_failed_rate": 0,
+      "pool_dropped_iterations_rate": null,
+      "rank_p99": 2
+    }
+  ]
+}

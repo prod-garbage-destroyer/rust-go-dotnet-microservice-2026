@@ -1,0 +1,48 @@
+{
+  "schema_version": "tail-latency-v3-1",
+  "experiment_slug": "rust-go-dotnet-microservice-2026-v3",
+  "generated_at_utc": "2026-05-27T13:20:03Z",
+  "scenario": "k6 open-loop tail latency",
+  "rows": [
+    {
+      "target": "rust-axum",
+      "tail_p95_ms": 283.82049999999987,
+      "tail_p99_ms": 1078.2907999999995,
+      "tail_p999_ms": 1481.5712200000023,
+      "tail_failed_rate": 0,
+      "tail_dropped_iterations_rate": 686.1366338104083,
+      "rank_p99": 4,
+      "rank_p999": 4
+    },
+    {
+      "target": "go-fiber",
+      "tail_p95_ms": 332.146,
+      "tail_p99_ms": 446.8534599999998,
+      "tail_p999_ms": 691.6256870000204,
+      "tail_failed_rate": 0,
+      "tail_dropped_iterations_rate": 1358.4575076385051,
+      "rank_p99": 3,
+      "rank_p999": 3
+    },
+    {
+      "target": "go-nethttp-chi",
+      "tail_p95_ms": 13.84,
+      "tail_p99_ms": 108.58236999999995,
+      "tail_p999_ms": 621.5683200001513,
+      "tail_failed_rate": 0,
+      "tail_dropped_iterations_rate": 121.8723134811896,
+      "rank_p99": 1,
+      "rank_p999": 2
+    },
+    {
+      "target": "dotnet-aot",
+      "tail_p95_ms": 179.826,
+      "tail_p99_ms": 215.98038999999997,
+      "tail_p999_ms": 260.4926340000025,
+      "tail_failed_rate": 0,
+      "tail_dropped_iterations_rate": 177.5019450445776,
+      "rank_p99": 2,
+      "rank_p999": 1
+    }
+  ]
+}

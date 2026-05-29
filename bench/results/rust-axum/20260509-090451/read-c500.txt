@@ -1,0 +1,9 @@
+Running 30s test @ http://host.containers.internal:3001
+  8 threads and 500 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    43.65ms    8.06ms 138.93ms   77.50%
+    Req/Sec   756.58    350.92     2.02k    70.38%
+  181025 requests in 30.07s, 24.34MB read
+  Non-2xx or 3xx responses: 181025
+Requests/sec:   6020.75
+Transfer/sec:    829.03KB

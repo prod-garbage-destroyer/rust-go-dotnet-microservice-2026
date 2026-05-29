@@ -101,9 +101,16 @@ async fn json_roundtrip(
         ));
     }
 
-    let enabled_count = payload.items.iter().filter(|item| item.enabled).count();
-    let score_sum: i64 = payload.items.iter().map(|item| item.score).sum();
-    let tag_count: usize = payload.items.iter().map(|item| item.tags.len()).sum();
+    let mut enabled_count = 0;
+    let mut score_sum: i64 = 0;
+    let mut tag_count = 0;
+    for item in &payload.items {
+        if item.enabled {
+            enabled_count += 1;
+        }
+        score_sum += item.score;
+        tag_count += item.tags.len();
+    }
 
     Ok(Json(JsonRoundtripResponse {
         tenant: payload.tenant,
@@ -133,7 +140,9 @@ async fn crypto_hash(
     for _ in 0..rounds {
         let mut hasher = Sha256::new();
         hasher.update(&bytes);
-        bytes = hasher.finalize().to_vec();
+        let hash = hasher.finalize();
+        bytes.clear();
+        bytes.extend_from_slice(&hash);
     }
 
     let digest_hex = bytes.iter().map(|b| format!("{:02x}", b)).collect::<String>();
@@ -176,12 +185,12 @@ async fn create_user(
 
     let email = user.email.clone();
     let notify_log_enabled = state.notify_log_enabled;
-    task::spawn(async move {
-        if notify_log_enabled {
+    if notify_log_enabled {
+        task::spawn(async move {
             let ts = Utc::now();
             println!("NOTIFY: email sent to {} at {}", email, ts);
-        }
-    });
+        });
+    }
 
     Ok((StatusCode::CREATED, Json(user)))
 }

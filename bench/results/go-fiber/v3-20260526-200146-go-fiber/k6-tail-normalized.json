@@ -1,0 +1,177 @@
+{
+  "schema_version": "k6-normalized-1",
+  "target": "go-fiber",
+  "scenario": "tail-latency",
+  "generated_at_utc": "2026-05-26T18:11:37Z",
+  "source_summary_file": "/Users/hrirks/video-gen/prod.garbagedestroyer/projects/rust-go-dotnet-microservice-2026/bench/results/go-fiber/v3-20260526-200146-go-fiber/k6-tail-summary.json",
+  "checks": {
+    "passes": {
+      "status is 200 or 404": {
+        "passes": 3791413,
+        "fails": 0,
+        "name": "status is 200 or 404",
+        "path": "::status is 200 or 404",
+        "id": "ef1456c8a1788ec4ce69f9b568c28265"
+      }
+    }
+  },
+  "http_req_duration_ms": {
+    "avg": 26.302947467079047,
+    "min": 0.111,
+    "med": 0.673,
+    "max": 545.466,
+    "p90": 128.459,
+    "p95": 170.346,
+    "p99": 228.39975999999993,
+    "p999": 363.0224680000046
+  },
+  "http_req_failed_rate": 0.0,
+  "iteration_rate": 8422.666370038645,
+  "iteration_count": 3791413,
+  "dropped_iterations_rate": 174.5108107975538,
+  "dropped_iterations_count": 78555,
+  "vus": {
+    "current": 2999,
+    "max": 3000
+  },
+  "thresholds": {
+    "http_req_duration": {
+      "p(95)<250": false,
+      "p(99)<500": false,
+      "p(99.9)<1000": false
+    },
+    "http_req_failed": {
+      "rate<0.05": true
+    }
+  },
+  "raw_metrics": {
+    "vus_max": {
+      "value": 3000,
+      "min": 300,
+      "max": 3000
+    },
+    "iteration_duration": {
+      "p(99)": 228.60046508,
+      "p(99.9)": 363.0812693040002,
+      "avg": 26.352975687405642,
+      "min": 0.12575,
+      "med": 0.71975,
+      "max": 545.50275,
+      "p(90)": 128.506958,
+      "p(95)": 170.38795019999998
+    },
+    "http_req_failed": {
+      "passes": 3791413,
+      "fails": 0,
+      "thresholds": {
+        "rate<0.05": true
+      },
+      "value": 1
+    },
+    "vus": {
+      "value": 2999,
+      "min": 0,
+      "max": 3000
+    },
+    "http_req_blocked": {
+      "p(99)": 0.011,
+      "p(99.9)": 0.081,
+      "avg": 0.002254997806980624,
+      "min": 0,
+      "med": 0.001,
+      "max": 17.583,
+      "p(90)": 0.003,
+      "p(95)": 0.004
+    },
+    "http_req_receiving": {
+      "p(99.9)": 0.393,
+      "avg": 0.013730695126036987,
+      "min": 0.002,
+      "med": 0.007,
+      "max": 22.356,
+      "p(90)": 0.02,
+      "p(95)": 0.027,
+      "p(99)": 0.06
+    },
+    "http_req_duration": {
+      "avg": 26.302947467079047,
+      "min": 0.111,
+      "med": 0.673,
+      "max": 545.466,
+      "p(90)": 128.459,
+      "p(95)": 170.346,
+      "p(99)": 228.39975999999993,
+      "p(99.9)": 363.0224680000046,
+      "thresholds": {
+        "p(95)<250": false,
+        "p(99)<500": false,
+        "p(99.9)<1000": false
+      }
+    },
+    "http_reqs": {
+      "count": 3791413,
+      "rate": 8422.666370038645
+    },
+    "iterations": {
+      "rate": 8422.666370038645,
+      "count": 3791413
+    },
+    "http_req_connecting": {
+      "p(95)": 0,
+      "p(99)": 0,
+      "p(99.9)": 0,
+      "avg": 0.00017107843434624519,
+      "min": 0,
+      "med": 0,
+      "max": 7.135,
+      "p(90)": 0
+    },
+    "http_req_sending": {
+      "p(95)": 0.019,
+      "p(99)": 0.118,
+      "p(99.9)": 0.913,
+      "avg": 0.011194151362694867,
+      "min": 0,
+      "med": 0.004,
+      "max": 26.895,
+      "p(90)": 0.011
+    },
+    "data_received": {
+      "count": 534589233,
+      "rate": 1187595.9581754492
+    },
+    "dropped_iterations": {
+      "count": 78555,
+      "rate": 174.5108107975538
+    },
+    "data_sent": {
+      "count": 424638256,
+      "rate": 943338.6334443283
+    },
+    "checks": {
+      "passes": 3791413,
+      "fails": 0,
+      "value": 1
+    },
+    "http_req_waiting": {
+      "min": 0.106,
+      "med": 0.654,
+      "max": 545.446,
+      "p(90)": 128.398,
+      "p(95)": 170.324,
+      "p(99)": 228.355,
+      "p(99.9)": 362.979,
+      "avg": 26.278022620590445
+    },
+    "http_req_tls_handshaking": {
+      "max": 0,
+      "p(90)": 0,
+      "p(95)": 0,
+      "p(99)": 0,
+      "p(99.9)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0
+    }
+  }
+}

@@ -210,12 +210,12 @@ func main() {
 			return c.Status(500).JSON(ErrorResponse{Error: err.Error()})
 		}
 
-		// Non-blocking background job
+	// Non-blocking background job
+	if notifyLogEnabled {
 		go func(email string) {
-			if notifyLogEnabled {
-				fmt.Printf("NOTIFY: email sent to %s at %s\n", email, time.Now().Format(time.RFC3339))
-			}
+			fmt.Printf("NOTIFY: email sent to %s at %s\n", email, time.Now().Format(time.RFC3339))
 		}(user.Email)
+	}
 
 		return c.Status(201).JSON(user)
 	})

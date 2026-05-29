@@ -1,0 +1,339 @@
+experiment:
+  slug: rust-go-dotnet-microservice-2026-v3
+  topic: "Rust (Axum) vs Go (Fiber + net/http) vs ASP.NET (.NET 10 JIT + Native AOT) — Definitive Fair Microservice Benchmark v3"
+  experiment_type: combined
+  primary_metric: p99_latency_ms
+  previous_versions:
+    - slug: rust-go-dotnet-microservice-2026
+      notes: "v1 — basic throughput and avg latency"
+    - slug: rust-go-dotnet-microservice-2026-v2
+      notes: "v2 — tail latency, cold/warm, saturation/recovery, AOT lane planned but absent"
+  fairness_review:
+    reviewer: nikitaclicks
+    source: https://github.com/prod-garbage-destroyer/rust-go-dotnet-microservice-2026/issues/1
+    summary: "v2 used Fiber (non-stdlib Go) vs stdlib Rust/.NET, missing AOT lane, JIT warmup asymmetry, Npgsql anti-pattern, unconditional notify spawns, Rust hash path inefficiencies."
+    resolution: "v3 addresses all blocking and should-fix items. Known Asymmetries documented in fairness-policy-v3.md."
+  targets:
+    - name: rust-axum
+      language: Rust
+      framework: Axum 0.8
+      toolchain: rustc 1.93.1
+      runtime_mode: native (AOT)
+      port: 3001
+    - name: go-fiber
+      language: Go
+      framework: Fiber v2 (fasthttp)
+      toolchain: go1.26.2
+      runtime_mode: native
+      port: 3002
+      known_asymmetry: "Non-stdlib HTTP framework (fasthttp). No HTTP/2 support. Trades correctness for speed. See fairness-policy-v3.md §Known Asymmetries."
+    - name: go-nethttp-chi
+      language: Go
+      framework: net/http (stdlib) + chi v5
+      toolchain: go1.26.2
+      runtime_mode: native
+      port: 3005
+      notes: "Stdlib-tier Go lane. Apples-to-apples with Axum/Kestrel framework class."
+    - name: dotnet-jit
+      language: C#
+      framework: ASP.NET Minimal API (.NET 10)
+      toolchain: dotnet 10.0.x
+      runtime_mode: jit + PublishReadyToRun
+      port: 3003
+      build_flags:
+        - PublishReadyToRun: true
+        - configuration: Release
+      notes: "PublishReadyToRun precompiles framework assemblies. Per-endpoint warmup eliminates tiered JIT asymmetry."
+    - name: dotnet-aot
+      language: C#
+      framework: ASP.NET Minimal API (.NET 10)
+      toolchain: dotnet 10.0.x
+      runtime_mode: native_aot
+      port: 3004
+      build_flags:
+        - PublishAot: true
+        - StripSymbols: true
+        - InvariantGlobalization: true
+      notes: "Self-contained native binary. Faster startup, lower memory, no JIT warmup tax. Compile time is significantly longer than JIT."
+
+environment:
+  os: linux
+  architecture: x86_64
+  container_runtime: podman
+  db:
+    engine: PostgreSQL 16
+    host_port: 5433
+  benchmark_tools:
+    closed_loop:
+      name: wrk
+      version: 4.2.0
+    open_loop:
+      name: k6
+      version: 0.53.x
+  perf_tools:
+    - perf
+    - pidstat
+
+fairness:
+  connection_pool:
+    min_connections: 5
+    max_connections: 20
+    all_targets: true
+  logging:
+    request_logging_enabled: false
+    startup_logging_only: true
+    app_log_level: Warning
+  middleware:
+    response_compression: disabled
+    tracing_exporters: disabled
+  notify_log:
+    enabled_during_timed_runs: false
+    enforcement: "BENCH_NOTIFY_LOG=false must be set AND verified in startup config log. Check is hoisted outside spawn in all implementations."
+  warmup:
+    per_endpoint: true
+    health_warmup_duration_seconds: 20
+    health_warmup_concurrency: 50
+    workload_warmup_duration_seconds: 10
+    workload_warmup_concurrency: 50
+    strategy: "Every measured endpoint receives warmup traffic with its actual request shape before timed phase. Warmup results discarded."
+  code_fairness_fixes:
+    - "Npgsql: AddWithValue replaced with typed NpgsqlParameter(NpgsqlDbType.*) in all queries"
+    - "Rust crypto/hash: finalize_into with stack buffer instead of .to_vec(), per-round heap alloc eliminated"
+    - "All three: notify spawn hoisted outside goroutine/task/tokio::spawn — no scheduling overhead when BENCH_NOTIFY_LOG=false"
+    - ".NET crypto/hash: Convert.ToHexStringLower replaces .ToHexString().ToLowerInvariant()"
+    - "Rust + .NET json/roundtrip: single-pass foreach/fold replaces multi-pass .iter()/.Sum() chains"
+  container_base_images:
+    rust-axum:
+      image: debian-bookworm-slim
+      libc: glibc
+    go-fiber:
+      image: debian-bookworm-slim
+      libc: glibc
+    go-nethttp-chi:
+      image: debian-bookworm-slim
+      libc: glibc
+    dotnet-jit:
+      image: mcr.microsoft.com/dotnet/aspnet:10.0
+      libc: glibc
+    dotnet-aot:
+      image: mcr.microsoft.com/dotnet/runtime-deps:10.0
+      libc: glibc
+
+endpoints:
+  common:
+    - method: POST
+      path: /users
+      request_body:
+        name: string (required, 1-100 chars)
+        email: string (required, valid email format)
+      response_body:
+        id: uuid
+        name: string
+        email: string
+        created_at: ISO8601 timestamp
+      status_success: 201
+      status_validation_error: 422
+      side_effect: "Background async notify job (conditionally spawned when BENCH_NOTIFY_LOG is true; never spawned during timed runs)"
+    - method: GET
+      path: /users/:id
+      response_body:
+        id: uuid
+        name: string
+        email: string
+        created_at: ISO8601 timestamp
+      status_success: 200
+      status_not_found: 404
+    - method: GET
+      path: /users
+      response_body: array of user objects
+      status_success: 200
+    - method: DELETE
+      path: /users/:id
+      status_success: 204
+      status_not_found: 404
+    - method: GET
+      path: /health
+      response_body:
+        status: "ok"
+      status_success: 200
+  v2_additions:
+    - method: POST
+      path: /json/roundtrip
+      request_body:
+        tenant: string
+        region: string
+        timestamp: string
+        items: array of {id, score, enabled, tags[]}
+      response_body:
+        tenant: string
+        region: string
+        items_count: int
+        enabled_count: int
+        score_sum: int64
+        tag_count: int
+      status_success: 200
+      status_validation_error: 422
+      notes: "Single-pass iteration across all targets (fixed from v2 multi-pass Rust/.NET asymmetry)."
+    - method: POST
+      path: /crypto/hash
+      request_body:
+        input: string
+        rounds: int (default 2000, clamp 1-20000)
+      response_body:
+        algorithm: "sha256"
+        rounds: int
+        digest_hex: string
+      status_success: 200
+      status_validation_error: 422
+      notes: "Stack-allocated hash buffer across all targets. Rust uses finalize_into; .NET uses Convert.ToHexStringLower."
+
+workloads:
+  - name: io_read_heavy
+    endpoint_mix:
+      - method: GET
+        path: /users/:id
+        weight_pct: 70
+      - method: POST
+        path: /users
+        weight_pct: 30
+  - name: json_hot_path
+    endpoint_mix:
+      - method: POST
+        path: /json/roundtrip
+        weight_pct: 100
+    payload_profile:
+      object_count: 50
+      nested_depth: 3
+      approx_payload_bytes: 8192
+  - name: cpu_bound
+    endpoint_mix:
+      - method: POST
+        path: /crypto/hash
+        weight_pct: 100
+    operation:
+      algorithm: sha256
+      rounds: 2000
+
+benchmarks:
+  warmup:
+    health:
+      duration_seconds: 20
+      concurrency: 50
+      endpoint: GET /health
+    per_workload:
+      duration_seconds: 10
+      concurrency: 50
+      endpoints:
+        - GET /users/:id
+        - POST /users
+        - POST /json/roundtrip
+        - POST /crypto/hash
+      strategy: "Separate warmup phase for each workload using actual request shapes. Warmup traffic discarded from results."
+  cold_vs_warm:
+    reset_between_targets: true
+    measurements:
+      - startup_time_ms
+      - first_request_latency_ms
+      - request_1000_latency_ms
+      - idle_memory_rss_mb
+      - warmed_memory_rss_mb
+  latency_tail:
+    method: open_loop
+    duration_seconds: 90
+    stages_rps:
+      - 2000
+      - 5000
+      - 10000
+      - 15000
+      - 20000
+    metrics:
+      - p50_latency_ms
+      - p95_latency_ms
+      - p99_latency_ms
+      - p999_latency_ms
+      - error_rate_pct
+      - dropped_iterations_pct
+  pool_saturation_recovery:
+    method: closed_loop
+    saturation_concurrency_levels:
+      - 50
+      - 100
+      - 200
+      - 400
+      - 800
+    sustain_seconds: 60
+    recovery_profile:
+      drop_to_concurrency: 50
+      observe_seconds: 60
+    metrics:
+      - rps
+      - p99_latency_ms
+      - error_rate_pct
+      - time_to_recover_p99_ms_under_100
+  cpu_efficiency:
+    method: closed_loop
+    endpoint: GET /users/:id
+    duration_seconds: 45
+    concurrency: 200
+    perf_stat_events:
+      - cycles
+      - instructions
+      - branches
+      - branch-misses
+      - cache-misses
+    derived_metrics:
+      - cpu_cycles_per_request
+      - instructions_per_request
+      - ipc
+
+build:
+  clean_build: true
+  strategy: "All targets built from clean cache (cargo clean / go clean -cache / dotnet clean). Build times measured with /usr/bin/time -v."
+  rust:
+    profile: release
+    flags:
+      - opt-level: 3
+      - lto: true
+      - codegen-units: 1
+  go-fiber:
+    build: "go build -ldflags='-s -w' -o microservice ."
+  go-nethttp-chi:
+    build: "go build -ldflags='-s -w' -o microservice ."
+  dotnet-jit:
+    build: "dotnet publish -c Release -o publish"
+    r2r_enabled: true
+  dotnet-aot:
+    build: "dotnet publish -c Release -o publish"
+    aot_enabled: true
+    note: "AOT compile time is significantly longer (30-60s). Documented separately from JIT build time."
+
+runs:
+  measurement_runs: 7
+  retry_policy:
+    infra_failures_only: true
+    max_retries: 1
+  startup_config_verification:
+    required_log_lines:
+      - "pool_min=5, pool_max=20"
+      - "notify_log_enabled=false"
+    failure_policy: "Run is discarded if startup config log does not confirm pool parity and notify disabled."
+
+ports:
+  rust-axum: 3001
+  go-fiber: 3002
+  dotnet-jit: 3003
+  dotnet-aot: 3004
+  go-nethttp-chi: 3005
+  postgres: 5433
+
+artifacts:
+  required:
+    - artifacts/benchmark-results-v3.json
+    - artifacts/tail-latency-v3.json
+    - artifacts/cpu-efficiency-v3.json
+    - artifacts/pool-saturation-recovery-v3.json
+    - artifacts/startup-cold-warm-v3.json
+    - artifacts/charts-data-v3.json
+    - artifacts/summary-v3.md
+    - artifacts/methodology-v3.md
+    - artifacts/fairness-report-v3.md

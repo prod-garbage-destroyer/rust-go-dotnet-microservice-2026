@@ -1,0 +1,172 @@
+{
+  "schema_version": "charts-data-v3-1",
+  "experiment_slug": "rust-go-dotnet-microservice-2026-v3",
+  "generated_at_utc": "2026-05-27T13:20:03Z",
+  "official_targets": [
+    "rust-axum",
+    "go-fiber",
+    "go-nethttp-chi",
+    "dotnet-aot"
+  ],
+  "charts": [
+    {
+      "type": "grouped-bar",
+      "title": "Read Throughput Across Concurrency Levels (RPS)",
+      "groups": [
+        "c=50",
+        "c=200",
+        "c=500"
+      ],
+      "lower_is_better": false,
+      "series": [
+        {
+          "target": "rust-axum",
+          "values": [
+            20476.39,
+            22462.2,
+            21884.37
+          ]
+        },
+        {
+          "target": "go-fiber",
+          "values": [
+            22093.95,
+            11982.2,
+            8229.3
+          ]
+        },
+        {
+          "target": "go-nethttp-chi",
+          "values": [
+            19097.99,
+            18759.85,
+            19840.8
+          ]
+        },
+        {
+          "target": "dotnet-aot",
+          "values": [
+            18291.37,
+            17283.2,
+            17733.42
+          ]
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Write Throughput (wrk POST /users c=50)",
+      "lower_is_better": false,
+      "series": [
+        {
+          "target": "rust-axum",
+          "value": 12763.88
+        },
+        {
+          "target": "go-fiber",
+          "value": 10839.52
+        },
+        {
+          "target": "go-nethttp-chi",
+          "value": 7883.67
+        },
+        {
+          "target": "dotnet-aot",
+          "value": 7910.22
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Open-Loop Tail Latency p99 (k6)",
+      "lower_is_better": true,
+      "series": [
+        {
+          "target": "rust-axum",
+          "value": 1078.2907999999995
+        },
+        {
+          "target": "go-fiber",
+          "value": 446.8534599999998
+        },
+        {
+          "target": "go-nethttp-chi",
+          "value": 108.58236999999995
+        },
+        {
+          "target": "dotnet-aot",
+          "value": 215.98038999999997
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Open-Loop Tail Latency p99.9 (k6)",
+      "lower_is_better": true,
+      "series": [
+        {
+          "target": "rust-axum",
+          "value": 1481.5712200000023
+        },
+        {
+          "target": "go-fiber",
+          "value": 691.6256870000204
+        },
+        {
+          "target": "go-nethttp-chi",
+          "value": 621.5683200001513
+        },
+        {
+          "target": "dotnet-aot",
+          "value": 260.4926340000025
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Dropped Iterations Rate (k6 Open-Loop)",
+      "lower_is_better": true,
+      "series": [
+        {
+          "target": "rust-axum",
+          "value": 686.1366338104083
+        },
+        {
+          "target": "go-fiber",
+          "value": 1358.4575076385051
+        },
+        {
+          "target": "go-nethttp-chi",
+          "value": 121.8723134811896
+        },
+        {
+          "target": "dotnet-aot",
+          "value": 177.5019450445776
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "Pool Saturation Recovery p99 (k6)",
+      "lower_is_better": true,
+      "series": [
+        {
+          "target": "rust-axum",
+          "value": 81.92101999999996
+        },
+        {
+          "target": "go-fiber",
+          "value": 60.25971999999995
+        },
+        {
+          "target": "go-nethttp-chi",
+          "value": 156.148
+        },
+        {
+          "target": "dotnet-aot",
+          "value": 67.998
+        }
+      ]
+    }
+  ]
+}
