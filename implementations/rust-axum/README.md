@@ -5,9 +5,31 @@ Rust + Axum 0.8 microservice implementation for the `rust-go-dotnet-microservice
 ## Stack
 - **Language:** Rust 1.93.1
 - **Framework:** Axum 0.8.9
-- **DB Driver:** sqlx 0.8.6 (async, compile-time checked queries)
+- **DB Driver:** `tokio-postgres` + `deadpool-postgres`, with typed queries generated at dev-time by [cornucopia](https://github.com/cornucopia-rs/cornucopia) from `queries/users.sql` (committed under `codegen/`)
 - **Validation:** validator 0.18
 - **Runtime:** Tokio
+
+### Why not sqlx?
+
+The original implementation used `sqlx`. Profiling showed `sqlx`'s connection pool pings the
+database on every single connection acquire (`test_before_acquire`, default `true`) **and**
+unconditionally on every release (`PoolConnection::drop` → `return_to_pool` → `raw.ping()`,
+not configurable) — up to 3 round trips to Postgres per request instead of 1. This made the
+sqlx version slower than the Go implementation despite Rust having no GC and a leaner runtime.
+
+`tokio-postgres` + `deadpool-postgres` (default `RecyclingMethod::Fast`, a pure in-memory
+`is_closed()` check, no network I/O) avoids both pings entirely. `cornucopia` restores sqlx's
+headline feature — compile-time, real-schema-checked queries — as a dev-time code generator
+on top of that same driver, so there's no runtime cost for the type safety.
+
+Benchmarked head-to-head against this repo's Go/Fiber implementation on the same Postgres
+instance (wrk, GET /users/:id): **+37% RPS at c=50, +28% at c=200, +21% at c=500** in favor
+of Rust — reversing the original result where Rust trailed Go.
+
+To regenerate the typed queries after editing `queries/users.sql`:
+```bash
+cornucopia live "$DATABASE_URL" -q queries -d codegen
+```
 
 ## Endpoints
 - `GET /health` → `{"status":"ok"}`
@@ -34,8 +56,7 @@ curl -X POST http://localhost:3001/users \
   -d '{"name":"Alice","email":"alice@example.com"}'
 ```
 
-## Build Stats (measured)
-- Cold build: ~46 seconds
-- Incremental: ~0.4 seconds
-- Binary size: 4.1 MB (self-contained)
-- Dependencies: 267 crates
+## Build Stats (measured, post-cornucopia-migration)
+- Cold build: ~25 seconds (was ~46s with sqlx)
+- Binary size: ~3.0 MB (self-contained)
+- Dependencies: ~155 crates (was 267 with sqlx)
